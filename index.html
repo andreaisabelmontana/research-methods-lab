@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4338CA" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>research-methods-lab · observe, experiment &amp; survey, made visual</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, { delimiters: [{left:'$$', right:'$$', display:true},{left:'$', right:'$', display:false}], ignoredTags: ['option','script','textarea'] })"></script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <span class="dot"></span><strong>research-methods-lab</strong>
+        <span class="sub">sampling · experiments · correlation · surveys · measurement</span>
+      </div>
+      <nav>
+        <a href="#sample">sampling</a>
+        <a href="#moe">margin of error</a>
+        <a href="#corr">correlation</a>
+        <a href="#confound">confounding</a>
+        <a href="#simpson">Simpson</a>
+        <a href="#abtest">experiment</a>
+        <a href="#error">type I &amp; II</a>
+        <a href="#phack">p-hacking</a>
+        <a href="#likert">survey bias</a>
+        <a href="#dart">reliability</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 1. SAMPLING — Module 1/2: Sampling from populations -->
+      <section class="demo" id="sample">
+        <h2>1. Population, sample &amp; sampling error</h2>
+        <p class="cap">A population of dots with a true proportion of "successes". Draw a random sample and the estimate
+          $\hat p$ jiggles around the truth. As $n$ grows the sampling error $\hat p - p$ shrinks like
+          $1/\sqrt{n}$. Biased sampling instead drifts to a systematically wrong value.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-sample" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>sample size $n$ <span class="mono" id="s-nv">40</span>
+              <input id="s-n" type="range" min="5" max="400" step="5" value="40"/></label>
+            <label>true proportion $p$ <span class="mono" id="s-pv">0.50</span>
+              <input id="s-p" type="range" min="5" max="95" step="1" value="50"/></label>
+            <label class="check"><input id="s-bias" type="checkbox"/> biased sampling (corner-favoring)</label>
+            <div class="readout"><span>estimate $\hat p$</span><strong id="s-phat" class="mono">—</strong></div>
+            <div class="readout"><span>error $\hat p - p$</span><strong id="s-err" class="mono">—</strong></div>
+            <div class="readout"><span>std. error</span><strong id="s-se" class="mono big">—</strong></div>
+            <button id="s-draw" class="btn">resample</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. MARGIN OF ERROR — Module 2: representative samples -->
+      <section class="demo" id="moe">
+        <h2>2. Sample size vs margin of error</h2>
+        <p class="cap">For a proportion at confidence level $C$, the margin of error is
+          $$E = z\sqrt{\dfrac{\hat p(1-\hat p)}{n}}.$$
+          The curve shows how $E$ falls as $n$ grows — quartering the error needs roughly $16\times$ the sample.
+          A $95\%$ confidence interval $\hat p \pm E$ is drawn for the current $n$.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-moe" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>sample size $n$ <span class="mono" id="m-nv">600</span>
+              <input id="m-n" type="range" min="20" max="3000" step="20" value="600"/></label>
+            <label>sample proportion $\hat p$ <span class="mono" id="m-pv">0.50</span>
+              <input id="m-p" type="range" min="5" max="95" step="1" value="50"/></label>
+            <label>confidence $C$
+              <select id="m-c">
+                <option value="90">90%</option>
+                <option value="95" selected>95%</option>
+                <option value="99">99%</option>
+              </select>
+            </label>
+            <div class="readout"><span>$z^\ast$</span><strong id="m-z" class="mono">—</strong></div>
+            <div class="readout"><span>margin $E$</span><strong id="m-e" class="mono big">—</strong></div>
+            <div class="readout"><span>interval</span><strong id="m-ci" class="mono">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CORRELATION — Module 2: scatterplots, correlation vs causation -->
+      <section class="demo" id="corr">
+        <h2>3. Correlation &amp; scatterplots</h2>
+        <p class="cap">Drag the slider to set the target correlation $r$ and resample a cloud of points.
+          The least-squares line and Pearson $r$ update live. A strong line is not proof of cause —
+          see the next two demos for why.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-corr" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>target correlation $r$ <span class="mono" id="c-rv">0.70</span>
+              <input id="c-r" type="range" min="-100" max="100" step="1" value="70"/></label>
+            <label>points $n$ <span class="mono" id="c-nv">60</span>
+              <input id="c-n" type="range" min="10" max="200" step="5" value="60"/></label>
+            <div class="readout"><span>measured $r$</span><strong id="c-r2" class="mono big">—</strong></div>
+            <div class="readout"><span>$r^2$ (variance shared)</span><strong id="c-rsq" class="mono">—</strong></div>
+            <div class="readout"><span>slope</span><strong id="c-slope" class="mono">—</strong></div>
+            <button id="c-draw" class="btn">resample</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. CONFOUNDING & RANDOMIZATION — Module 3 -->
+      <section class="demo" id="confound">
+        <h2>4. Confounding &amp; randomization</h2>
+        <p class="cap">A confounder $Z$ affects both the treatment assignment and the outcome, faking a
+          treatment effect. Turn on <em>randomization</em> to assign groups by coin flip — this breaks the
+          $Z\rightarrow$ treatment arrow, so the naive difference collapses toward the true effect.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-confound" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>true treatment effect <span class="mono" id="f-ev">0.0</span>
+              <input id="f-e" type="range" min="-30" max="30" step="1" value="0"/></label>
+            <label>confounder strength <span class="mono" id="f-cv">0.7</span>
+              <input id="f-c" type="range" min="0" max="100" step="1" value="70"/></label>
+            <label class="check"><input id="f-rand" type="checkbox"/> randomize assignment</label>
+            <div class="readout"><span>naive difference</span><strong id="f-naive" class="mono big">—</strong></div>
+            <div class="readout"><span>vs true effect</span><strong id="f-true" class="mono">—</strong></div>
+            <button id="f-draw" class="btn">resample</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. SIMPSON'S PARADOX — Module 2: third variables -->
+      <section class="demo" id="simpson">
+        <h2>5. Simpson's paradox</h2>
+        <p class="cap">Two subgroups each show a positive trend, yet pooling them can reverse the direction.
+          Slide the group separation to see the aggregate line flip against the within-group lines —
+          a vivid third-variable warning.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-simpson" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>group separation <span class="mono" id="p-sv">60</span>
+              <input id="p-s" type="range" min="0" max="100" step="1" value="60"/></label>
+            <label class="check"><input id="p-split" type="checkbox" checked/> show groups separately</label>
+            <div class="readout"><span>group A slope</span><strong id="p-a" class="mono">—</strong></div>
+            <div class="readout"><span>group B slope</span><strong id="p-b" class="mono">—</strong></div>
+            <div class="readout"><span>pooled slope</span><strong id="p-pool" class="mono big">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. EXPERIMENT / TWO-GROUP COMPARISON — Module 3 -->
+      <section class="demo" id="abtest">
+        <h2>6. Two-group experiment &amp; effect size</h2>
+        <p class="cap">A control and a treatment group with adjustable means and spread. The standardized
+          effect size is Cohen's $d=\dfrac{\bar x_T-\bar x_C}{s}$, and a two-sample test gives the
+          $t$ statistic and an approximate $p$-value.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-ab" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>mean difference <span class="mono" id="a-dv">0.6</span>
+              <input id="a-d" type="range" min="0" max="40" step="1" value="6"/></label>
+            <label>spread (std dev) <span class="mono" id="a-sv">1.0</span>
+              <input id="a-s" type="range" min="5" max="40" step="1" value="10"/></label>
+            <label>per-group $n$ <span class="mono" id="a-nv">30</span>
+              <input id="a-n" type="range" min="5" max="200" step="5" value="30"/></label>
+            <div class="readout"><span>Cohen's $d$</span><strong id="a-d2" class="mono">—</strong></div>
+            <div class="readout"><span>$t$</span><strong id="a-t" class="mono">—</strong></div>
+            <div class="readout"><span>$p$-value</span><strong id="a-p" class="mono big">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. TYPE I & II ERROR — Module 2: type I & II error, power -->
+      <section class="demo" id="error">
+        <h2>7. Type I &amp; Type II error</h2>
+        <p class="cap">Two sampling distributions: $H_0$ (no effect) and $H_1$ (true effect). The decision
+          threshold at significance $\alpha$ splits the picture into $\alpha$ (false positive),
+          $\beta$ (false negative) and power $1-\beta$.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-error" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>effect size (separation) <span class="mono" id="e-ev">2.5</span>
+              <input id="e-e" type="range" min="0" max="60" step="1" value="25"/></label>
+            <label>significance $\alpha$
+              <select id="e-a">
+                <option value="0.10">0.10</option>
+                <option value="0.05" selected>0.05</option>
+                <option value="0.01">0.01</option>
+              </select>
+            </label>
+            <div class="readout"><span>$\alpha$ (type I)</span><strong id="e-alpha" class="mono">—</strong></div>
+            <div class="readout"><span>$\beta$ (type II)</span><strong id="e-beta" class="mono">—</strong></div>
+            <div class="readout"><span>power $1-\beta$</span><strong id="e-power" class="mono big">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. P-HACKING — Module 2: replication, multiple comparisons -->
+      <section class="demo" id="phack">
+        <h2>8. p-hacking &amp; multiple comparisons</h2>
+        <p class="cap">When nothing is real, each test is a $p<\alpha$ false positive with probability $\alpha$.
+          Run $k$ independent tests and the chance of <em>at least one</em> "significant" result is
+          $1-(1-\alpha)^k$ — testing many things almost guarantees a fluke.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-phack" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>number of tests $k$ <span class="mono" id="h-kv">20</span>
+              <input id="h-k" type="range" min="1" max="80" step="1" value="20"/></label>
+            <label>significance $\alpha$
+              <select id="h-a">
+                <option value="0.10">0.10</option>
+                <option value="0.05" selected>0.05</option>
+                <option value="0.01">0.01</option>
+              </select>
+            </label>
+            <div class="readout"><span>$P(\ge 1$ false pos$)$</span><strong id="h-fwer" class="mono big">—</strong></div>
+            <div class="readout"><span>this run: "significant"</span><strong id="h-hits" class="mono">—</strong></div>
+            <button id="h-draw" class="btn">run tests</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. SURVEY / LIKERT — Module 5: surveys, question bias -->
+      <section class="demo" id="likert">
+        <h2>9. Survey question bias (Likert)</h2>
+        <p class="cap">The same question, asked neutrally or with a leading / loaded framing, shifts the
+          response distribution. Watch the 5-point Likert bars and the mean response slide as you change
+          the wording bias and acquiescence (yea-saying) tendency.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-likert" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>wording
+              <select id="l-w">
+                <option value="0" selected>neutral</option>
+                <option value="1">mildly leading</option>
+                <option value="2">strongly loaded</option>
+              </select>
+            </label>
+            <label>acquiescence bias <span class="mono" id="l-bv">0.20</span>
+              <input id="l-b" type="range" min="0" max="100" step="1" value="20"/></label>
+            <label>respondents <span class="mono" id="l-nv">200</span>
+              <input id="l-n" type="range" min="20" max="1000" step="20" value="200"/></label>
+            <div class="readout"><span>mean response</span><strong id="l-mean" class="mono big">—</strong></div>
+            <div class="readout"><span>% agree (4–5)</span><strong id="l-agree" class="mono">—</strong></div>
+            <button id="l-draw" class="btn">resample</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. RELIABILITY VS VALIDITY — Module 1/4: dartboard analogy -->
+      <section class="demo" id="dart">
+        <h2>10. Reliability vs validity</h2>
+        <p class="cap">The classic dartboard analogy. <em>Reliability</em> is consistency (tight cluster);
+          <em>validity</em> is hitting the true target (bullseye). A measure can be reliable but biased,
+          valid but noisy, or — the goal — both.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-dart" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>reliability (1 − noise) <span class="mono" id="d-rv">0.70</span>
+              <input id="d-r" type="range" min="0" max="100" step="1" value="70"/></label>
+            <label>validity (1 − bias) <span class="mono" id="d-vv">0.70</span>
+              <input id="d-v" type="range" min="0" max="100" step="1" value="70"/></label>
+            <label>shots <span class="mono" id="d-nv">25</span>
+              <input id="d-n" type="range" min="5" max="100" step="1" value="25"/></label>
+            <div class="readout"><span>spread (scatter)</span><strong id="d-spread" class="mono">—</strong></div>
+            <div class="readout"><span>bias (off-center)</span><strong id="d-bias" class="mono">—</strong></div>
+            <div class="readout"><span>verdict</span><strong id="d-verdict" class="mono big">—</strong></div>
+            <button id="d-draw" class="btn">re-throw</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>research-methods-lab — Andrea Montana · IE BCSAI</span>
+      <span class="more">
+        <a href="https://github.com/andreaisabelmontana/calc-lab"  target="_blank">calc-lab</a>
+        <a href="https://github.com/andreaisabelmontana/stats-lab" target="_blank">stats-lab</a>
+        <a href="https://github.com/andreaisabelmontana/discrete-math-lab" target="_blank">discrete-math-lab</a>
+        <a href="https://github.com/andreaisabelmontana/research-methods-lab" target="_blank">source</a>
+      </span>
+    </footer>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
