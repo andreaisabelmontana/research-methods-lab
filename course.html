@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4338CA" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>research-methods-lab · course outline · observe, experiment &amp; survey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <style>
+      /* course.html — extends the *-lab design language, reusing :root tokens */
+      .lede { color: var(--ink-soft); font-size: 0.95rem; max-width: 70ch; margin: 0 0 0.85rem; }
+      .lede + .lede { margin-top: 0; }
+
+      /* meta grid */
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 0.6rem 1rem;
+        margin-top: 0.85rem;
+      }
+      .meta .cell {
+        border-top: 1px dotted var(--rule);
+        padding-top: 0.4rem;
+      }
+      .meta .k { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+      .meta .v { color: var(--ink); font-weight: 600; font-size: 0.9rem; }
+
+      /* objective list */
+      ol.obj, ul.plain { margin: 0.4rem 0 0; padding-left: 1.2rem; color: var(--ink-soft); font-size: 0.88rem; }
+      ol.obj li, ul.plain li { margin: 0.35rem 0; }
+
+      /* percentage bars */
+      .bars { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.6rem; }
+      .bar-row { display: grid; grid-template-columns: minmax(120px, 200px) 1fr auto; align-items: center; gap: 0.7rem; font-size: 0.82rem; }
+      .bar-row .lab { color: var(--ink-soft); font-weight: 500; }
+      .bar-track { background: var(--rule); border-radius: 999px; height: 8px; overflow: hidden; }
+      .bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+      .bar-row .pct { font-family: var(--font-mono); font-weight: 600; color: var(--ink); font-size: 0.8rem; min-width: 3.2em; text-align: right; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      @media (max-width: 760px) { .two-col { grid-template-columns: 1fr; } }
+      .sub-h { font-size: 0.82rem; font-weight: 700; color: var(--ink); margin: 0 0 0.2rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+      /* module / timeline */
+      .module { margin-top: 1.4rem; }
+      .module:first-of-type { margin-top: 0.4rem; }
+      .module-head {
+        display: flex; align-items: baseline; gap: 0.55rem;
+        padding-bottom: 0.45rem; margin-bottom: 0.6rem;
+        border-bottom: 1px solid var(--rule-h);
+      }
+      .module-head .mnum {
+        font-family: var(--font-mono); font-weight: 600; font-size: 0.72rem;
+        color: #fff; background: var(--accent); border-radius: 4px; padding: 0.12em 0.5em;
+      }
+      .module-head h3 { font-size: 0.98rem; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em; }
+      .module-head .mdesc { color: var(--muted); font-size: 0.78rem; }
+
+      .timeline { display: flex; flex-direction: column; gap: 0.1rem; padding-left: 0.2rem; }
+      .sess {
+        display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.7rem;
+        padding: 0.55rem 0; border-bottom: 1px dotted var(--rule);
+      }
+      .sess:last-child { border-bottom: 0; }
+      .sess .snum {
+        font-family: var(--font-mono); font-weight: 600; font-size: 0.78rem;
+        color: var(--accent); padding-top: 0.05rem;
+      }
+      .sess .stitle { font-weight: 600; font-size: 0.9rem; color: var(--ink); }
+      .sess .skicker { color: var(--muted); font-weight: 500; font-size: 0.76rem; }
+      .sess ul.topics { margin: 0.3rem 0 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: 0.82rem; }
+      .sess ul.topics li { margin: 0.12rem 0; }
+      .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.45rem; }
+      .tag {
+        font-size: 0.7rem; font-weight: 500; line-height: 1.4;
+        padding: 0.12em 0.5em; border-radius: 999px;
+        border: 1px solid var(--rule-h); color: var(--ink-soft); background: var(--bg);
+      }
+      .tag.read { font-family: var(--font-mono); }
+      .tag.exer { border-color: rgba(67,56,202,0.25); color: var(--accent); background: var(--accent-soft); }
+      .tag.demo-link { border-color: var(--good); color: var(--good); background: rgba(22,163,74,0.08); font-weight: 600; }
+      .tag.demo-link:hover { border-bottom-color: var(--good); }
+      .tag.milestone { border-color: var(--warn); color: #B45309; background: rgba(245,158,11,0.10); font-weight: 600; }
+
+      .anchor-offset { scroll-margin-top: 4rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <span class="dot"></span><strong>research-methods-lab</strong>
+        <span class="sub">course outline · observe, experiment &amp; survey</span>
+      </div>
+      <nav>
+        <a href="./index.html">← interactive demos</a>
+        <a href="#overview">overview</a>
+        <a href="#objectives">objectives</a>
+        <a href="#methodology">methodology</a>
+        <a href="#assessment">assessment</a>
+        <a href="#program">program</a>
+        <a href="./SYLLABUS.pdf" target="_blank">syllabus PDF</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- OVERVIEW + META -->
+      <section class="demo anchor-offset" id="overview">
+        <h2>Learning to Observe, Experiment and Survey</h2>
+        <p class="cap">An introductory research-methods course for students with little prior background in
+          methodology. It maps directly onto the interactive demos in this repo — every session below that has a
+          matching visualization links straight to it.</p>
+        <p class="lede">Students learn the different types of research (experimental, correlational, case
+          studies, surveys) and the phases of scientific inquiry. The course is hands-on: students participate in
+          several experiments via workshops, conduct a small observational field study in groups, and learn the
+          ethical principles governing research with human and non-human participants.</p>
+        <p class="lede">Throughout, every concept is applied to real-world situations — behavioral economics,
+          digital marketing and communications, and emerging technologies — to highlight the contribution of
+          empirical research across domains.</p>
+        <div class="meta">
+          <div class="cell"><div class="k">Program</div><div class="v">BCSAI — Computer Science &amp; AI</div></div>
+          <div class="cell"><div class="k">Course code</div><div class="v">LOES-N-CSAI.1.M.A</div></div>
+          <div class="cell"><div class="k">Area</div><div class="v">Mathematics</div></div>
+          <div class="cell"><div class="k">Sessions</div><div class="v">30 (live, in-person)</div></div>
+          <div class="cell"><div class="k">Credits</div><div class="v">6.0 ECTS</div></div>
+          <div class="cell"><div class="k">Year</div><div class="v">First · 2025–26</div></div>
+          <div class="cell"><div class="k">Semester</div><div class="v">1º</div></div>
+          <div class="cell"><div class="k">Category</div><div class="v">Basic</div></div>
+          <div class="cell"><div class="k">Language</div><div class="v">English</div></div>
+          <div class="cell"><div class="k">Professor</div><div class="v">Joshua Jorg Guyer</div></div>
+          <div class="cell"><div class="k">Contact</div><div class="v">jguyer@faculty.ie.edu</div></div>
+          <div class="cell"><div class="k">Total workload</div><div class="v">150 hours</div></div>
+        </div>
+      </section>
+
+      <!-- LEARNING OBJECTIVES -->
+      <section class="demo anchor-offset" id="objectives">
+        <h2>Learning objectives</h2>
+        <p class="cap">The goal is to introduce quantitative and qualitative methodology and provide the tools for
+          basic empirical research, enhancing the ability to think critically and scientifically about everyday
+          problems. Specifically, the course is designed to:</p>
+        <ol class="obj">
+          <li>Develop the ability to <strong>think critically about research</strong>, including understanding how
+            research methodology is used to answer basic scientific questions.</li>
+          <li><strong>Evaluate the research process</strong> using classic quality standards from both a qualitative
+            and quantitative perspective (reliability, validity, triangulation, etc.).</li>
+          <li><strong>Accurately communicate scientific research</strong> via PowerPoint in an engaging manner.</li>
+        </ol>
+      </section>
+
+      <!-- METHODOLOGY + ASSESSMENT -->
+      <section class="demo anchor-offset" id="methodology">
+        <h2>Teaching methodology</h2>
+        <p class="cap">Lecture- and activity-based. Each topic has two parts: first the relevant theory, then the
+          practical application to real-world issues through in-class discussions and debates, a group
+          project/presentation, and labs and workshops. Labs focus on analyzing, interpreting and describing results
+          in proper APA format; workshops let students conduct and participate in their own research. Students read
+          assigned materials or watch short videos before class.</p>
+        <div class="sub-h">Learning-activity weighting (≈150 h total)</div>
+        <div class="bars">
+          <div class="bar-row"><span class="lab">Lectures</span><span class="bar-track"><span class="bar-fill" style="width:30%"></span></span><span class="pct">30% · 45h</span></div>
+          <div class="bar-row"><span class="lab">Exercises / async / field work</span><span class="bar-track"><span class="bar-fill" style="width:30%"></span></span><span class="pct">30% · 45h</span></div>
+          <div class="bar-row"><span class="lab">Group work</span><span class="bar-track"><span class="bar-fill" style="width:20%"></span></span><span class="pct">20% · 30h</span></div>
+          <div class="bar-row"><span class="lab">Discussions</span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">10% · 15h</span></div>
+          <div class="bar-row"><span class="lab">Individual studying</span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">10% · 15h</span></div>
+        </div>
+      </section>
+
+      <section class="demo anchor-offset" id="assessment">
+        <h2>Assessment / evaluation</h2>
+        <p class="cap">Continuous evaluation. Attendance is <em>not</em> graded, but a minimum of 80% attendance is
+          required to remain in the ordinary/extraordinary calls. A minimum grade of <strong>3.5</strong> on the
+          final exam is required to pass the course, regardless of the weighted average.</p>
+        <div class="bars">
+          <div class="bar-row"><span class="lab">Midterm exam <span class="skicker">(Session 19)</span></span><span class="bar-track"><span class="bar-fill" style="width:60%"></span></span><span class="pct">30%</span></div>
+          <div class="bar-row"><span class="lab">Final exam <span class="skicker">(Session 30, cumulative)</span></span><span class="bar-track"><span class="bar-fill" style="width:50%"></span></span><span class="pct">25%</span></div>
+          <div class="bar-row"><span class="lab">Short quizzes <span class="skicker">(5 × 3%)</span></span><span class="bar-track"><span class="bar-fill" style="width:30%"></span></span><span class="pct">15%</span></div>
+          <div class="bar-row"><span class="lab">Class participation</span><span class="bar-track"><span class="bar-fill" style="width:20%"></span></span><span class="pct">10%</span></div>
+          <div class="bar-row"><span class="lab">Group research presentation <span class="skicker">(Sessions 28–29)</span></span><span class="bar-track"><span class="bar-fill" style="width:20%"></span></span><span class="pct">10%</span></div>
+          <div class="bar-row"><span class="lab">Experiment participation <span class="skicker">(5 × 1%)</span></span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">5%</span></div>
+          <div class="bar-row"><span class="lab">Discussion boards <span class="skicker">(5 × 1%)</span></span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">5%</span></div>
+        </div>
+      </section>
+
+      <!-- PROGRAM -->
+      <section class="demo anchor-offset" id="program">
+        <h2>Program — 30 sessions across 6 modules</h2>
+        <p class="cap">The full session-by-session schedule from the syllabus. Each session is lecture- and
+          activity-based with background readings.
+          <span class="tag exer">exercise / lab</span>
+          <span class="tag read">key reading</span>
+          <span class="tag demo-link">try the demo →</span>
+          <span class="tag milestone">graded milestone</span></p>
+
+        <!-- MODULE 1 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M1</span>
+            <h3>The Research Process</h3>
+            <span class="mdesc">goals, questions, common sense vs. science, judgment biases</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">01</div>
+              <div>
+                <div class="stitle">Introduction to Research Methods <span class="skicker">· live in-person</span></div>
+                <ul class="topics">
+                  <li>Objectives, contents, schedule, evaluation system, testing, common sense</li>
+                  <li>The role of common sense; how to think about ourselves and others</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">"So you think you know?" common-sense exercise</span>
+                  <span class="tag exer">Science vs. pseudoscience (small groups)</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">02</div>
+              <div>
+                <div class="stitle">Common Biases in Judgment &amp; Decision Making — Part 1</div>
+                <ul class="topics">
+                  <li>Cognitive biases, confirmation bias, self-fulfilling prophecy</li>
+                  <li>Belief perseverance error, overconfidence effect</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">How preconceptions/biases affect evaluations of self &amp; others</span>
+                  <span class="tag read">Judgment under uncertainty</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">03</div>
+              <div>
+                <div class="stitle">Common Biases in Judgment &amp; Decision Making — Part 2</div>
+                <ul class="topics">
+                  <li>Fundamental attribution error, actor–observer effect, self-serving bias</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Attributions of success/failure for self vs. others</span>
+                  <span class="tag read">From the FAE to the truly FAE</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">04</div>
+              <div>
+                <div class="stitle">Common Biases in Judgment &amp; Decision Making — Part 3</div>
+                <ul class="topics">
+                  <li>Hindsight bias, false consensus / false uniqueness effect</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Assumptions of hindsight bias &amp; false-consensus/uniqueness</span>
+                  <span class="tag read">Self-esteem &amp; self-serving bias</span>
+                  <span class="tag read">Cross-cultural false-consensus effect</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">05</div>
+              <div>
+                <div class="stitle">Evaluating Information Scientifically — Part 1</div>
+                <ul class="topics">
+                  <li>What is science? Science vs. common sense; the scientific method</li>
+                  <li>Goals/types of research, features of empirical research, hypotheses &amp; theories</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Quiz #1 (sessions 2–4)</span>
+                  <span class="tag exer">Creating manipulations, measures &amp; control groups</span>
+                  <span class="tag exer">Operational definitions of constructs</span>
+                  <span class="tag read">Ch.1 Introduction to Scientific Thinking</span>
+                  <span class="tag read">Ch.2 Generating Testable Ideas</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">06</div>
+              <div>
+                <div class="stitle">Evaluating Information Scientifically — Part 2</div>
+                <ul class="topics">
+                  <li>Science vs. pseudoscience, types of validity, replication, Type I &amp; II error</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Interactive illustration of Type I vs. Type II error</span>
+                  <span class="tag read">Ch.1 Distinguishing Science from Pseudoscience</span>
+                  <span class="tag read">Ch.4 Reliability &amp; Validity of a Measurement</span>
+                  <span class="tag read">Ch.4 Replication as a Gauge for Fraud?</span>
+                  <span class="tag read">Ch.14 Types of Error and Power</span>
+                  <a class="tag demo-link" href="./index.html#error">demo: Type I &amp; II error →</a>
+                  <a class="tag demo-link" href="./index.html#dart">demo: reliability vs validity →</a>
+                  <a class="tag demo-link" href="./index.html#phack">demo: p-hacking &amp; replication →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 2 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M2</span>
+            <h3>Descriptive &amp; Correlational Methodologies</h3>
+            <span class="mdesc">sampling, surveys, observation, correlation vs. causation</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">07</div>
+              <div>
+                <div class="stitle">Research Design and Operationalization</div>
+                <ul class="topics">
+                  <li>Features of descriptive research designs, representative samples, case studies</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Quiz #2 (session 5)</span>
+                  <span class="tag exer">Applied case study: deception detection</span>
+                  <span class="tag read">Ch.4 Identifying Scientific Variables</span>
+                  <span class="tag read">Ch.5 Sampling from Populations</span>
+                  <a class="tag demo-link" href="./index.html#sample">demo: population, sample &amp; sampling error →</a>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">08</div>
+              <div>
+                <div class="stitle">Descriptive Research Designs</div>
+                <ul class="topics">
+                  <li>Surveys, naturalistic observation; strengths &amp; weaknesses of each</li>
+                  <li>Descriptive vs. correlational designs, causation, third variables, issues</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Creating a survey — what makes a good survey?</span>
+                  <span class="tag exer">Three procedures to improve causal validity</span>
+                  <span class="tag read">Ch.6 Choosing a Research Design</span>
+                  <span class="tag read">Ch.13 Descriptive Statistics: Why Summarize Data?</span>
+                  <a class="tag demo-link" href="./index.html#moe">demo: sample size vs margin of error →</a>
+                  <a class="tag demo-link" href="./index.html#likert">demo: survey question bias →</a>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">09</div>
+              <div>
+                <div class="stitle">Correlational Research Designs</div>
+                <ul class="topics">
+                  <li>Correlational designs, causation, third variables, issues</li>
+                  <li>Scatterplots, directionality &amp; third-variable problems, correlation vs. causation</li>
+                  <li>Spurious correlations; procedures to improve understanding of correlations</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Quiz #3 (session 6)</span>
+                  <span class="tag exer">Creating a correlational study</span>
+                  <span class="tag read">Ch.8 Correlational Designs</span>
+                  <a class="tag demo-link" href="./index.html#corr">demo: correlation &amp; scatterplots →</a>
+                  <a class="tag demo-link" href="./index.html#simpson">demo: Simpson's paradox →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 3 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M3</span>
+            <h3>Experimental Methodologies</h3>
+            <span class="mdesc">manipulation, randomization, control, factorial designs, workshops</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">10</div>
+              <div>
+                <div class="stitle">Introduction to Experimental Research — Part 1</div>
+                <ul class="topics">
+                  <li>Features of experimental studies: manipulation, randomization, control groups</li>
+                  <li>Confounding variables, placebo effect</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Whole class: identifying components of an experimental study</span>
+                  <span class="tag read">Ch.9 Single-Case Experimental Designs</span>
+                  <a class="tag demo-link" href="./index.html#confound">demo: confounding &amp; randomization →</a>
+                  <a class="tag demo-link" href="./index.html#abtest">demo: two-group experiment &amp; effect size →</a>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">11</div>
+              <div>
+                <div class="stitle">Introduction to Experimental Research — Part 2</div>
+                <ul class="topics">
+                  <li>Participant/experimenter effects, single/double blind, applications, meta-analysis</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Quiz #4 (sessions 7–8)</span>
+                  <span class="tag exer">Creating an experiment: identifying/manipulating/measuring IVs &amp; DVs</span>
+                  <span class="tag read">Ch.9 Single-Case Experimental Designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">12</div>
+              <div>
+                <div class="stitle">Factorial Designs — Part 1</div>
+                <ul class="topics">
+                  <li>Factorial designs, main effects &amp; 2-way/3-way interactions, statistical tests</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Create an experiment using a factorial design</span>
+                  <span class="tag read">Ch.12 Factorial Experimental Designs</span>
+                  <span class="tag read">Ch.12 Main Effects and Interactions</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">13</div>
+              <div>
+                <div class="stitle">Factorial Designs — Part 2</div>
+                <ul class="topics">
+                  <li>Main effects, interactions, simple main effects, floor/ceiling effects</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Quiz #5 (session 9)</span>
+                  <span class="tag exer">Identifying main effects/interactions using real data</span>
+                  <span class="tag read">Ch.12 Main Effects and Interactions</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">14</div>
+              <div>
+                <div class="stitle">Factorial Designs — Part 3</div>
+                <ul class="topics">
+                  <li>Identifying main effects, interactions, control groups &amp; confounds in studies</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">In-class assignment on main effects &amp; interactions (HMW 1)</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">15</div>
+              <div>
+                <div class="stitle">Workshop 1 — Conducting Between-Participants Design Experiments</div>
+                <ul class="topics">
+                  <li>Participate in a between-participants design experiment (individual basis)</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Workshop: between-participants experiment</span>
+                  <span class="tag read">Ch.10 Between-Subjects Experimental Designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">16</div>
+              <div>
+                <div class="stitle">Factorial ANOVA Data from Workshop 1</div>
+                <ul class="topics">
+                  <li>Discussion of between-participants experimental data from Workshop 1</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">In-class assignment on confounds/components of experiments (HMW 2)</span>
+                  <span class="tag read">Ch.10 General Instructions for Conducting a Factorial ANOVA</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">17</div>
+              <div>
+                <div class="stitle">Workshop 2 — Conducting Mixed Factorial Design Experiments</div>
+                <ul class="topics">
+                  <li>Participate in a mixed factorial design experiment (individual basis)</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Workshop: mixed factorial experiment</span>
+                  <span class="tag read">Ch.10 Mixed Participants Experimental Designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">18</div>
+              <div>
+                <div class="stitle">Mixed-Design Data from Workshop 2 / Midterm Prep</div>
+                <ul class="topics">
+                  <li>Discussion of mixed-design experimental data from Workshop 2; midterm preparation</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag read">Ch.11 Comparing Between-Subjects / Within-Subjects Designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">19</div>
+              <div>
+                <div class="stitle">Midterm Exam — in class</div>
+                <div class="tags">
+                  <span class="tag milestone">Midterm exam (30%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 4 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M4</span>
+            <h3>Quasi-Experimental &amp; Applied Research and Measurement</h3>
+            <span class="mdesc">quasi-experiments, applied research, psychological measures, ethics</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">20</div>
+              <div>
+                <div class="stitle">Introduction to Quasi-Experimental Designs</div>
+                <ul class="topics">
+                  <li>Quasi-experimental research, pre/post-test designs, interrupted time-series, issues</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Design a quasi-experiment and test its effectiveness</span>
+                  <span class="tag read">Ch.11 Quasi-Experimental Designs</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">21</div>
+              <div>
+                <div class="stitle">Introduction to Applied Research</div>
+                <ul class="topics">
+                  <li>Applied research: history, real-world examples, pre/post-tests, ethical issues</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Costs/benefits &amp; ethical implications of applied research</span>
+                  <span class="tag read">Quasi-Experimental Designs &amp; Applied Research</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">22</div>
+              <div>
+                <div class="stitle">Psychological Measures: Types, Uses &amp; Ethical Considerations</div>
+                <ul class="topics">
+                  <li>Indirect vs. direct self-report; behavioral/physiological measures</li>
+                  <li>Strengths/weaknesses of measurement tools, reliability of measures</li>
+                  <li>Ethical research, human/animal participants, research ethics boards</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Guest-lecture video on psychological measures (take-home)</span>
+                  <span class="tag exer">"Do animals have rights?" — discussion board</span>
+                  <span class="tag read">Should we trust web-based studies?</span>
+                  <span class="tag read">Ch.3 Research Ethics</span>
+                  <span class="tag read">Ethics of CIA/military contracting</span>
+                  <span class="tag read">Conflicts of ethical choices in human research</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 5 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M5</span>
+            <h3>Qualitative Methodologies</h3>
+            <span class="mdesc">interviews, focus groups, surveys, observational field study</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">23</div>
+              <div>
+                <div class="stitle">Introduction to Qualitative Designs — Part 1</div>
+                <ul class="topics">
+                  <li>Qualitative vs. quantitative research, types of sampling, types of interviews</li>
+                  <li>Interview process; creating &amp; conducting an interview; strengths/weaknesses</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Interview development: type, population &amp; questions</span>
+                  <span class="tag read">Writing interview protocol &amp; conducting interviews</span>
+                  <a class="tag demo-link" href="./index.html#likert">demo: survey question bias →</a>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">24</div>
+              <div>
+                <div class="stitle">Qualitative Designs — Part 2</div>
+                <ul class="topics">
+                  <li>Focus groups: processes &amp; protocol, data analyses, issues</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Choose a topic, identify moderator, conduct focus group (6–8 people)</span>
+                  <span class="tag read">Focus groups &amp; surveys as complementary methods</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">25</div>
+              <div>
+                <div class="stitle">Qualitative Designs — Part 3</div>
+                <ul class="topics">
+                  <li>Focus groups continued…</li>
+                </ul>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">26</div>
+              <div>
+                <div class="stitle">Workshop — Observational Field Study</div>
+                <ul class="topics">
+                  <li>Applied qualitative methods: conducting field research / gathering data</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag exer">Field study: conduct research &amp; gather data</span>
+                  <span class="tag read">Revisiting field experimentation: field notes for the future</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 6 -->
+        <div class="module">
+          <div class="module-head">
+            <span class="mnum">M6</span>
+            <h3>Communicating Scientific Knowledge</h3>
+            <span class="mdesc">APA writing, manuscripts, presentations, final exam</span>
+          </div>
+          <div class="timeline">
+            <div class="sess">
+              <div class="snum">27</div>
+              <div>
+                <div class="stitle">Writing the Research Report &amp; Analyzing an Issue</div>
+                <ul class="topics">
+                  <li>Structured writing, formatting, title page, references, citing, plagiarism</li>
+                  <li>Group project (in-class / take-home if necessary)</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag read">Ch.15 Communicating Research: Manuscripts, Posters &amp; Talks</span>
+                  <span class="tag read">APA-Style Writing &amp; Sample Manuscript</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">28</div>
+              <div>
+                <div class="stitle">Group Research Presentation — Day 1</div>
+                <ul class="topics">
+                  <li>Discussion, evaluation and feedback · submit via Turnitin on presentation date</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Group presentation (10%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">29</div>
+              <div>
+                <div class="stitle">Group Research Presentation — Day 2</div>
+                <ul class="topics">
+                  <li>Discussion, evaluation and feedback · submit via Turnitin on presentation date</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Group presentation (10%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="sess">
+              <div class="snum">30</div>
+              <div>
+                <div class="stitle">Final Exam — in class</div>
+                <ul class="topics">
+                  <li>Cumulative; multiple-choice plus long-answer. Minimum 3.5 required to pass.</li>
+                </ul>
+                <div class="tags">
+                  <span class="tag milestone">Final exam (25%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>research-methods-lab — Andrea Montana · IE BCSAI</span>
+      <span class="more">
+        <a href="https://github.com/andreaisabelmontana/calc-lab"  target="_blank">calc-lab</a>
+        <a href="https://github.com/andreaisabelmontana/stats-lab" target="_blank">stats-lab</a>
+        <a href="https://github.com/andreaisabelmontana/discrete-math-lab" target="_blank">discrete-math-lab</a>
+        <a href="https://github.com/andreaisabelmontana/research-methods-lab" target="_blank">source</a>
+      </span>
+    </footer>
+  </body>
+</html>
