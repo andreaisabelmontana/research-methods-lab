@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4338CA" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>research-methods-lab · worked example project · screen-time &amp; focus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, { delimiters: [{left:'$$', right:'$$', display:true},{left:'$', right:'$', display:false}], ignoredTags: ['option','script','textarea'] })"></script>
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <style>
+      /* project.html — extends the *-lab design language, reusing :root tokens only */
+      .lede { color: var(--ink-soft); font-size: 0.95rem; max-width: 74ch; margin: 0 0 0.85rem; }
+
+      .anchor-offset { scroll-margin-top: 4rem; }
+
+      /* meta / overview grid (mirrors course.html) */
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 0.6rem 1rem; margin-top: 0.85rem;
+      }
+      .meta .cell { border-top: 1px dotted var(--rule); padding-top: 0.4rem; }
+      .meta .k { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+      .meta .v { color: var(--ink); font-weight: 600; font-size: 0.9rem; }
+
+      .sub-h { font-size: 0.82rem; font-weight: 700; color: var(--ink); margin: 1rem 0 0.3rem; text-transform: uppercase; letter-spacing: 0.04em; }
+      .step-h { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin: 1.1rem 0 0.35rem; }
+
+      ol.obj, ul.plain { margin: 0.4rem 0 0; padding-left: 1.2rem; color: var(--ink-soft); font-size: 0.88rem; }
+      ol.obj li, ul.plain li { margin: 0.35rem 0; }
+
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      @media (max-width: 760px) { .two-col { grid-template-columns: 1fr; } }
+
+      /* callout boxes — reuse tokens */
+      .note {
+        margin: 0.6rem 0; padding: 0.55rem 0.8rem;
+        border-left: 2px solid var(--accent); background: var(--accent-soft);
+        border-radius: 0 4px 4px 0; font-size: 0.85rem; color: var(--ink-soft);
+      }
+      .note b { color: var(--ink); }
+      .note.warn { border-left-color: var(--warn); background: rgba(245,158,11,0.10); }
+      .note.warn b { color: #B45309; }
+      .note.good { border-left-color: var(--good); background: rgba(22,163,74,0.08); }
+
+      /* hypothesis / formula block */
+      .formula {
+        background: var(--bg); border: 1px solid var(--rule);
+        border-radius: 6px; padding: 0.6rem 0.9rem; margin: 0.6rem 0;
+        font-size: 0.9rem; color: var(--ink-soft);
+      }
+
+      /* tables */
+      table.data {
+        width: 100%; border-collapse: collapse; margin: 0.7rem 0;
+        font-size: 0.83rem;
+      }
+      table.data th, table.data td {
+        text-align: left; padding: 0.4rem 0.6rem;
+        border-bottom: 1px solid var(--rule);
+      }
+      table.data thead th {
+        color: var(--muted); font-size: 0.72rem; text-transform: uppercase;
+        letter-spacing: 0.04em; font-weight: 600; border-bottom: 1px solid var(--rule-h);
+      }
+      table.data td.num, table.data th.num { font-family: var(--font-mono); text-align: right; }
+      table.data tbody tr:hover { background: var(--bg); }
+      table.data tr.total td { font-weight: 700; color: var(--ink); border-top: 1px solid var(--rule-h); }
+
+      /* code snippet */
+      pre.code {
+        background: #15151A; color: #E5E5EA;
+        border-radius: 6px; padding: 0.8rem 1rem; margin: 0.6rem 0;
+        font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55;
+        overflow-x: auto;
+      }
+      pre.code .cm { color: #8A8A92; }
+      pre.code .kw { color: #A5B4FC; }
+      pre.code .st { color: #6EE7B7; }
+      pre.code .fn { color: #FCD34D; }
+
+      /* tag chips (mirror course.html) */
+      .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+      .tag {
+        font-size: 0.7rem; font-weight: 500; line-height: 1.4;
+        padding: 0.12em 0.5em; border-radius: 999px;
+        border: 1px solid var(--rule-h); color: var(--ink-soft); background: var(--bg);
+      }
+      .tag.sess { border-color: rgba(67,56,202,0.25); color: var(--accent); background: var(--accent-soft); }
+      .tag.demo-link { border-color: var(--good); color: var(--good); background: rgba(22,163,74,0.08); font-weight: 600; }
+      .tag.demo-link:hover { border-bottom-color: var(--good); }
+
+      .step {
+        border-left: 2px solid var(--rule-h); padding: 0.1rem 0 0.1rem 0.9rem;
+        margin: 0.8rem 0;
+      }
+      .step .snum {
+        display: inline-block; font-family: var(--font-mono); font-weight: 600;
+        font-size: 0.7rem; color: #fff; background: var(--accent);
+        border-radius: 4px; padding: 0.1em 0.45em; margin-right: 0.4em;
+      }
+
+      /* outcome mapping grid */
+      .map-row {
+        display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr);
+        gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px dotted var(--rule);
+        font-size: 0.84rem;
+      }
+      .map-row:last-child { border-bottom: 0; }
+      .map-row .lo { color: var(--ink); font-weight: 600; }
+      .map-row .ev { color: var(--ink-soft); }
+
+      ol.refs { margin: 0.4rem 0 0; padding-left: 1.3rem; color: var(--ink-soft); font-size: 0.82rem; }
+      ol.refs li { margin: 0.4rem 0; }
+
+      .diff { display: inline-flex; gap: 3px; vertical-align: middle; margin-left: 0.3em; }
+      .diff i { width: 7px; height: 7px; border-radius: 2px; background: var(--rule-h); display: inline-block; }
+      .diff i.on { background: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <span class="dot"></span><strong>research-methods-lab</strong>
+        <span class="sub">worked example project · a full study, end to end</span>
+      </div>
+      <nav>
+        <a href="./index.html">interactive demos</a>
+        <a href="./course.html">course outline</a>
+        <a href="#overview">overview</a>
+        <a href="#question">question</a>
+        <a href="#design">design</a>
+        <a href="#analysis">analysis</a>
+        <a href="#validity">validity &amp; ethics</a>
+        <a href="#outcomes">outcomes</a>
+        <a href="#extensions">extensions</a>
+        <a href="#refs">references</a>
+        <a href="./SYLLABUS.pdf" target="_blank">syllabus PDF</a>
+      </nav>
+    </header>
+
+    <main>
+
+      <!-- ============ 1. OVERVIEW ============ -->
+      <section class="demo anchor-offset" id="overview">
+        <h2>Worked example: screen-time &amp; focus — a mixed-methods study, start to finish</h2>
+        <p class="lede">This page is a single, fully worked research project that threads together every
+          method in the course: framing a testable question, operationalizing fuzzy constructs, drawing a
+          representative sample, writing a clean questionnaire, designing a quasi-experiment, and analyzing a
+          mock dataset with real formulas — then auditing it for bias, confounding and ethics. Treat it as a
+          template for the group field study (Sessions 26–29) and a model of what "doing it properly" looks like.</p>
+
+        <p class="lede"><b>The scenario.</b> A study team at a university wants to know whether heavy
+          smartphone use is associated with worse sustained attention in first-year students, and whether a
+          simple "notifications-off" intervention measurably improves focus. They run a correlational survey
+          phase <em>and</em> a small quasi-experiment, then combine the qualitative and quantitative findings.</p>
+
+        <div class="meta">
+          <div class="cell"><div class="k">Goal</div><div class="v">Link daily screen-time to sustained attention &amp; test an intervention</div></div>
+          <div class="cell"><div class="k">Type</div><div class="v">Mixed-methods: survey + quasi-experiment</div></div>
+          <div class="cell"><div class="k">Target sample</div><div class="v">n &asymp; 180 first-year students</div></div>
+          <div class="cell"><div class="k">Difficulty</div><div class="v">intermediate <span class="diff"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+          <div class="cell"><div class="k">Est. effort</div><div class="v">~12–15 h (design + fieldwork + write-up)</div></div>
+          <div class="cell"><div class="k">Deliverable</div><div class="v">APA-style report + conference-style talk</div></div>
+        </div>
+
+        <p class="sub-h">Sessions exercised</p>
+        <p class="cap" style="margin-bottom:0.3rem;">Each phase below maps to specific course sessions. The tags throughout the page link back to the relevant session and to the matching interactive demo.</p>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">S5 operational definitions</a>
+          <a class="tag sess" href="./course.html#program">S6 validity · type I/II</a>
+          <a class="tag sess" href="./course.html#program">S7 sampling</a>
+          <a class="tag sess" href="./course.html#program">S8 surveys · descriptives</a>
+          <a class="tag sess" href="./course.html#program">S9 correlation</a>
+          <a class="tag sess" href="./course.html#program">S10–11 experiments</a>
+          <a class="tag sess" href="./course.html#program">S20 quasi-experiment</a>
+          <a class="tag sess" href="./course.html#program">S22 measures &amp; ethics</a>
+          <a class="tag sess" href="./course.html#program">S26 field study</a>
+          <a class="tag sess" href="./course.html#program">S27 APA write-up</a>
+        </div>
+      </section>
+
+      <!-- ============ 2. RESEARCH QUESTION & HYPOTHESES ============ -->
+      <section class="demo anchor-offset" id="question">
+        <h2>1 · Research question, constructs &amp; hypotheses</h2>
+        <p class="cap">A good study starts from one sharp question and a handful of falsifiable predictions —
+          not a vague topic. Compare the textbook progression from a "topic" to a testable hypothesis.</p>
+
+        <div class="two-col">
+          <div>
+            <p class="sub-h">From topic to question</p>
+            <ul class="plain">
+              <li><b>Topic:</b> "phones and attention" — too broad to test.</li>
+              <li><b>Question Q1 (correlational):</b> Among first-year students, is higher daily smartphone
+                screen-time associated with lower sustained-attention performance?</li>
+              <li><b>Question Q2 (causal):</b> Does silencing non-essential notifications for one week
+                improve sustained attention relative to a no-change control?</li>
+            </ul>
+          </div>
+          <div>
+            <p class="sub-h">Constructs &rarr; operational definitions</p>
+            <table class="data">
+              <thead><tr><th>Construct</th><th>Operationalization</th></tr></thead>
+              <tbody>
+                <tr><td>Screen-time</td><td>7-day mean of OS-reported daily minutes (Screen Time / Digital Wellbeing screenshot)</td></tr>
+                <tr><td>Sustained attention</td><td>d2-style cancellation task score: correct &minus; errors over 5 min</td></tr>
+                <tr><td>Self-reported focus</td><td>5-item scale, 5-pt Likert, mean of items</td></tr>
+                <tr><td>Notification load</td><td># of push-enabled apps (count)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="sub-h">Hypotheses</p>
+        <div class="formula">
+          <b>Correlational (Q1).</b> Let $X$ = mean daily screen-time (min) and $Y$ = attention-task score.
+          $$H_0:\ \rho_{XY}=0 \qquad H_1:\ \rho_{XY}<0$$
+          A one-sided alternative: more screen-time is predicted to go with <em>lower</em> attention.
+        </div>
+        <div class="formula">
+          <b>Experimental (Q2).</b> Let $\mu_T,\mu_C$ be mean post-intervention attention for treatment
+          (notifications off) and control.
+          $$H_0:\ \mu_T-\mu_C = 0 \qquad H_1:\ \mu_T-\mu_C > 0$$
+        </div>
+
+        <div class="note warn"><b>Directionality trap.</b> Even a strong negative $\rho_{XY}$ in Q1 cannot
+          establish that phones <em>cause</em> inattention — reverse causation (inattentive people reach for
+          phones) and third variables (sleep, stress) are live. That is precisely why Q2 adds an experiment.</div>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Session 5 · operational definitions</a>
+          <a class="tag demo-link" href="./index.html#corr">demo: correlation &amp; scatterplots &rarr;</a>
+          <a class="tag demo-link" href="./index.html#error">demo: type I &amp; II error &rarr;</a>
+        </div>
+      </section>
+
+      <!-- ============ 3. DESIGN ============ -->
+      <section class="demo anchor-offset" id="design">
+        <h2>2 · Design: sampling, instrument &amp; experiment</h2>
+
+        <p class="step-h">2.1 Sampling plan</p>
+        <p class="cap">The target population is first-year undergraduates at one university (&asymp; 1,200 students).
+          A census is infeasible, so we sample. We use <b>stratified random sampling</b> to guarantee the
+          sample mirrors the population on a variable likely tied to the outcome (degree area).</p>
+        <ul class="plain">
+          <li><b>Frame:</b> the registrar's first-year enrolment list (closest available list to the true population).</li>
+          <li><b>Strata:</b> degree area (STEM / business / humanities), since baseline study habits may differ.</li>
+          <li><b>Within strata:</b> simple random sampling, allocation proportional to stratum size.</li>
+          <li><b>Target size:</b> $n=180$ (see margin-of-error calc below); over-recruit to $n=210$ for ~15% attrition.</li>
+        </ul>
+
+        <div class="formula">
+          <b>How big must the sample be?</b> For a proportion estimate at 95% confidence with margin of error
+          $E$, the worst-case ($\hat p=0.5$) size is
+          $$n=\frac{z^2\,\hat p(1-\hat p)}{E^2}=\frac{1.96^2\cdot 0.25}{0.05^2}\approx 384.$$
+          With a finite population of $N=1200$ we apply the finite-population correction:
+          $$n_{\text{adj}}=\frac{n}{1+(n-1)/N}=\frac{384}{1+383/1200}\approx 291.$$
+          For our <em>continuous</em> attention outcome we instead size for the correlation/experiment (power
+          analysis below), landing on $n\approx 180$ — comfortably above the minimum to detect $r=-0.25$.
+        </div>
+
+        <div class="note"><b>Why not just post a link?</b> A volunteer/convenience web sample over-represents
+          the highly-engaged and self-selects on the very trait we study (phone habits) &mdash; classic
+          <em>selection bias</em>. Stratified random sampling from the enrolment frame is the defensible choice.</div>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Session 7 · sampling from populations</a>
+          <a class="tag demo-link" href="./index.html#sample">demo: population, sample &amp; sampling error &rarr;</a>
+          <a class="tag demo-link" href="./index.html#moe">demo: sample size vs margin of error &rarr;</a>
+        </div>
+
+        <p class="step-h">2.2 The questionnaire</p>
+        <p class="cap">A short instrument with mixed item types. Note the deliberate use of neutral wording, a
+          reverse-scored item to catch straight-lining, and a behavioral anchor (the OS screenshot) so we are
+          not relying on self-report alone.</p>
+        <table class="data">
+          <thead><tr><th>#</th><th>Item</th><th>Type / scale</th></tr></thead>
+          <tbody>
+            <tr><td>Q1</td><td>Degree area</td><td>Categorical (3 options) — stratum check</td></tr>
+            <tr><td>Q2</td><td>Paste your 7-day average daily screen-time (minutes)</td><td>Numeric, open — behavioral anchor</td></tr>
+            <tr><td>Q3</td><td>Number of apps with notifications enabled</td><td>Numeric, open</td></tr>
+            <tr><td>Q4</td><td>"I can stay focused on one task for 30+ minutes."</td><td>5-pt Likert (1 strongly disagree – 5 strongly agree)</td></tr>
+            <tr><td>Q5</td><td>"I check my phone without consciously deciding to." <em>(reverse-scored)</em></td><td>5-pt Likert (R)</td></tr>
+            <tr><td>Q6</td><td>"My phone rarely interrupts my studying."</td><td>5-pt Likert</td></tr>
+            <tr><td>Q7</td><td>Average nightly sleep (hours) — <em>covariate</em></td><td>Numeric, open</td></tr>
+            <tr><td>Q8</td><td>"What does 'being focused' feel like for you?"</td><td>Open text — qualitative</td></tr>
+          </tbody>
+        </table>
+        <div class="note good"><b>Scale reliability.</b> Items Q4–Q6 form the self-reported-focus scale. After
+          reverse-scoring Q5, we report internal consistency with Cronbach's $\alpha$; we treat
+          $\alpha\ge 0.70$ as acceptable. Reliability (consistency) is necessary but not sufficient for
+          validity (measuring the right thing).</div>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Session 8 · what makes a good survey</a>
+          <a class="tag sess" href="./course.html#program">Session 22 · measures &amp; reliability</a>
+          <a class="tag demo-link" href="./index.html#likert">demo: survey question bias &rarr;</a>
+          <a class="tag demo-link" href="./index.html#dart">demo: reliability vs validity &rarr;</a>
+        </div>
+
+        <p class="step-h">2.3 The (quasi-)experimental design</p>
+        <p class="cap">Q2 needs a manipulation. Ideally we <b>randomly assign</b> participants to condition,
+          making it a true experiment; if assignment must respect existing tutorial groups, it becomes a
+          <b>quasi-experiment</b> with intact groups (weaker causal claim). We use a pretest–posttest
+          two-group design.</p>
+        <table class="data">
+          <thead><tr><th>Group</th><th>Pretest</th><th>Manipulation (1 week)</th><th>Posttest</th></tr></thead>
+          <tbody>
+            <tr><td>Treatment ($n=45$)</td><td>O&#8321; attention task</td><td>Silence non-essential notifications</td><td>O&#8322; attention task</td></tr>
+            <tr><td>Control ($n=45$)</td><td>O&#8321; attention task</td><td>No change to phone</td><td>O&#8322; attention task</td></tr>
+          </tbody>
+        </table>
+        <ul class="plain">
+          <li><b>Independent variable:</b> notification condition (off vs. unchanged) — manipulated.</li>
+          <li><b>Dependent variable:</b> change in attention score $\Delta = O_2-O_1$.</li>
+          <li><b>Control of confounds:</b> randomization (true experiment) breaks the link between condition
+            and lurking variables; single-blind scoring; identical task instructions; same time-of-day testing.</li>
+          <li><b>Why pretest–posttest:</b> using $\Delta$ removes stable individual differences in baseline attention.</li>
+        </ul>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Sessions 10–11 · experiments</a>
+          <a class="tag sess" href="./course.html#program">Session 20 · quasi-experimental designs</a>
+          <a class="tag demo-link" href="./index.html#confound">demo: confounding &amp; randomization &rarr;</a>
+          <a class="tag demo-link" href="./index.html#abtest">demo: two-group experiment &amp; effect size &rarr;</a>
+        </div>
+      </section>
+
+      <!-- ============ 4. DATA COLLECTION + MOCK ANALYSIS ============ -->
+      <section class="demo anchor-offset" id="analysis">
+        <h2>3 · Data collection plan &amp; mock analysis</h2>
+
+        <div class="step"><span class="snum">1</span><b>Pilot</b> the questionnaire on ~10 students; check item
+          clarity, timing, and that the OS screenshot instruction works on both iOS and Android.</div>
+        <div class="step"><span class="snum">2</span><b>Recruit &amp; consent.</b> Email the stratified random
+          sample; obtain informed consent; assign anonymous IDs (no names stored with data).</div>
+        <div class="step"><span class="snum">3</span><b>Survey wave.</b> Collect Q1–Q8 + the pretest attention
+          task (O&#8321;) for all participants — this powers the correlational analysis.</div>
+        <div class="step"><span class="snum">4</span><b>Assign &amp; intervene.</b> Randomize the experimental
+          subset to treatment/control; run the 1-week manipulation.</div>
+        <div class="step"><span class="snum">5</span><b>Posttest.</b> Re-administer the attention task (O&#8322;).</div>
+        <div class="step"><span class="snum">6</span><b>Clean &amp; analyze.</b> Reverse-score Q5, screen for
+          straight-lining and impossible values, then run the analyses below.</div>
+
+        <p class="sub-h">3.1 Descriptive statistics (correlational wave, n = 180)</p>
+        <p class="cap">Always describe before you infer. Means, standard deviations and the shape of each variable.</p>
+        <table class="data">
+          <thead><tr><th>Variable</th><th class="num">Mean</th><th class="num">SD</th><th class="num">Min</th><th class="num">Max</th></tr></thead>
+          <tbody>
+            <tr><td>Screen-time $X$ (min/day)</td><td class="num">312</td><td class="num">98</td><td class="num">95</td><td class="num">588</td></tr>
+            <tr><td>Attention score $Y$</td><td class="num">142</td><td class="num">27</td><td class="num">71</td><td class="num">203</td></tr>
+            <tr><td>Self-report focus (1–5)</td><td class="num">3.1</td><td class="num">0.8</td><td class="num">1.2</td><td class="num">4.8</td></tr>
+            <tr><td>Sleep (h)</td><td class="num">6.8</td><td class="num">1.1</td><td class="num">4.0</td><td class="num">9.0</td></tr>
+          </tbody>
+        </table>
+        <div class="formula">
+          Sample mean and (unbiased) standard deviation:
+          $$\bar x=\frac{1}{n}\sum_{i=1}^{n}x_i,\qquad
+            s=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar x)^2}.$$
+        </div>
+
+        <p class="sub-h">3.2 Correlation: screen-time vs. attention</p>
+        <div class="formula">
+          Pearson's correlation coefficient:
+          $$r=\frac{\sum (x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum (x_i-\bar x)^2}\,\sqrt{\sum (y_i-\bar y)^2}}.$$
+          Mock result: $r=-0.34$, so $r^2=0.12$ — screen-time accounts for ~12% of the variance in attention
+          scores. We test it against $H_0:\rho=0$ with
+          $$t=\frac{r\sqrt{n-2}}{\sqrt{1-r^2}}=\frac{-0.34\sqrt{178}}{\sqrt{1-0.116}}\approx -4.83,$$
+          on $df=178$, giving $p<0.001$ (one-sided). We reject $H_0$: a moderate <em>negative</em> association.
+        </div>
+        <pre class="code"><span class="cm"># 3.2 — correlation + significance (Python / SciPy)</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> scipy <span class="kw">import</span> stats
+
+r, p_two = stats.<span class="fn">pearsonr</span>(screen_time, attention)
+p_one    = p_two / <span class="st">2</span>            <span class="cm"># one-sided: predicted negative</span>
+<span class="fn">print</span>(<span class="st">f"r = {r:.2f},  r^2 = {r**2:.2f},  one-sided p = {p_one:.4f}"</span>)
+<span class="cm"># r = -0.34,  r^2 = 0.12,  one-sided p = 0.0000</span></pre>
+        <div class="note warn"><b>Correlation &ne; causation.</b> The $r=-0.34$ is consistent with phones
+          harming attention, attention problems driving phone use, <em>or</em> a confounder (poor sleep)
+          driving both. We added sleep as a covariate (Q7); a partial correlation controlling for sleep drops
+          to $r_{XY\cdot Z}=-0.27$ — attenuated but still present.</div>
+
+        <p class="sub-h">3.3 Two-group test: did the intervention work?</p>
+        <p class="cap">We compare the attention <em>change</em> $\Delta=O_2-O_1$ between treatment and control
+          with an independent-samples (Welch) $t$-test, and report a standardized effect size.</p>
+        <table class="data">
+          <thead><tr><th>Group</th><th class="num">n</th><th class="num">Mean &Delta;</th><th class="num">SD</th></tr></thead>
+          <tbody>
+            <tr><td>Treatment (notifications off)</td><td class="num">45</td><td class="num">+11.2</td><td class="num">14.0</td></tr>
+            <tr><td>Control (no change)</td><td class="num">45</td><td class="num">+2.4</td><td class="num">13.1</td></tr>
+            <tr class="total"><td>Difference</td><td class="num">—</td><td class="num">8.8</td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+        <div class="formula">
+          Welch's two-sample $t$ and pooled-SD Cohen's $d$:
+          $$t=\frac{\bar\Delta_T-\bar\Delta_C}{\sqrt{\dfrac{s_T^2}{n_T}+\dfrac{s_C^2}{n_C}}}
+            =\frac{11.2-2.4}{\sqrt{\frac{14.0^2}{45}+\frac{13.1^2}{45}}}\approx 3.08,$$
+          $$d=\frac{\bar\Delta_T-\bar\Delta_C}{s_{\text{pooled}}}=\frac{8.8}{13.6}\approx 0.65.$$
+          With $df\approx 87.6$, $p\approx 0.0014$ (one-sided). We reject $H_0$: a moderate, statistically
+          significant improvement (Cohen's $d\approx 0.65$).
+        </div>
+        <pre class="code"><span class="cm"># 3.3 — Welch t-test + Cohen's d</span>
+t, p_two = stats.<span class="fn">ttest_ind</span>(delta_T, delta_C, equal_var=<span class="kw">False</span>)
+sp = np.<span class="fn">sqrt</span>((delta_T.<span class="fn">var</span>(ddof=<span class="st">1</span>) + delta_C.<span class="fn">var</span>(ddof=<span class="st">1</span>)) / <span class="st">2</span>)
+d  = (delta_T.<span class="fn">mean</span>() - delta_C.<span class="fn">mean</span>()) / sp
+<span class="fn">print</span>(<span class="st">f"t = {t:.2f},  one-sided p = {p_two/2:.4f},  d = {d:.2f}"</span>)
+<span class="cm"># t = 3.08,  one-sided p = 0.0014,  d = 0.65</span></pre>
+
+        <p class="sub-h">3.4 Results summary</p>
+        <table class="data">
+          <thead><tr><th>Analysis</th><th>Test</th><th class="num">Statistic</th><th class="num">p</th><th>Effect size</th><th>Decision</th></tr></thead>
+          <tbody>
+            <tr><td>Q1 screen-time &harr; attention</td><td>Pearson $r$</td><td class="num">r = &minus;0.34</td><td class="num">&lt; .001</td><td>r² = .12</td><td>reject H&#8320;</td></tr>
+            <tr><td>Q1 controlling for sleep</td><td>partial $r$</td><td class="num">&minus;0.27</td><td class="num">&lt; .001</td><td>r² = .07</td><td>reject H&#8320;</td></tr>
+            <tr><td>Q2 intervention effect</td><td>Welch $t$</td><td class="num">t = 3.08</td><td class="num">.0014</td><td>d = 0.65</td><td>reject H&#8320;</td></tr>
+          </tbody>
+        </table>
+        <div class="note good"><b>Plain-language conclusion.</b> Heavier screen-time is moderately associated
+          with lower sustained attention (and remains so after adjusting for sleep), and a one-week
+          notifications-off intervention produced a moderate, significant gain in attention. The combined
+          design lets us speak more confidently about <em>cause</em> than the survey alone could.</div>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Session 8 · descriptive statistics</a>
+          <a class="tag sess" href="./course.html#program">Session 9 · correlation</a>
+          <a class="tag demo-link" href="./index.html#corr">demo: correlation &amp; scatterplots &rarr;</a>
+          <a class="tag demo-link" href="./index.html#abtest">demo: two-group experiment &amp; effect size &rarr;</a>
+        </div>
+      </section>
+
+      <!-- ============ 5. VALIDITY, BIAS, ETHICS ============ -->
+      <section class="demo anchor-offset" id="validity">
+        <h2>4 · Threats to validity, bias &amp; ethics</h2>
+        <p class="cap">A finding is only as trustworthy as the design that produced it. Here we audit our own
+          study against the standard threats — the kind of critique the final exam asks you to perform.</p>
+
+        <div class="two-col">
+          <div>
+            <p class="sub-h">Internal validity (causal claim)</p>
+            <ul class="plain">
+              <li><b>Confounding:</b> sleep, stress, course load. Mitigated by randomization (Q2) and a sleep covariate (Q1).</li>
+              <li><b>Maturation / testing:</b> the attention task itself may improve with practice — the
+                control group accounts for this (their +2.4 baseline drift).</li>
+              <li><b>Demand characteristics:</b> treatment participants may try harder knowing they're "the
+                phone group." Single-blind scoring + a plausible control task reduce this.</li>
+            </ul>
+            <p class="sub-h">External validity (generalization)</p>
+            <ul class="plain">
+              <li>One university, first-years only — results may not transfer to other ages or cultures.</li>
+              <li>One-week manipulation says little about durable, months-long effects.</li>
+            </ul>
+          </div>
+          <div>
+            <p class="sub-h">Measurement &amp; bias</p>
+            <ul class="plain">
+              <li><b>Self-report bias:</b> screen-time recall is unreliable — hence the OS screenshot anchor.</li>
+              <li><b>Acquiescence / social desirability:</b> the reverse-scored Q5 detects straight-lining.</li>
+              <li><b>Selection bias:</b> avoided by random sampling from the enrolment frame, not volunteers.</li>
+              <li><b>Multiple comparisons / p-hacking:</b> we pre-registered exactly three tests; running dozens
+                of subgroup analyses would inflate the family-wise false-positive rate to $1-(1-\alpha)^k$.</li>
+            </ul>
+            <p class="sub-h">Statistical conclusion validity</p>
+            <ul class="plain">
+              <li><b>Power:</b> $n=180$ gives &gt;80% power to detect $r=-0.25$; the experiment ($n=90$) detects $d\ge 0.6$.</li>
+              <li>We report effect sizes ($r^2$, $d$), not just $p$ — significance &ne; importance.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note"><b>Ethics (IE / APA principles, Session 22).</b> Informed consent and the right to
+          withdraw; anonymous IDs with screen-time data stored separately from identifiers; minimal risk
+          (no deception); a debrief explaining the hypotheses; and a data-retention plan. The notifications-off
+          manipulation is low-risk and reversible. Approval from the research ethics board precedes any data collection.</div>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Session 6 · validity · type I &amp; II error</a>
+          <a class="tag sess" href="./course.html#program">Session 22 · research ethics</a>
+          <a class="tag demo-link" href="./index.html#confound">demo: confounding &amp; randomization &rarr;</a>
+          <a class="tag demo-link" href="./index.html#simpson">demo: Simpson's paradox &rarr;</a>
+          <a class="tag demo-link" href="./index.html#phack">demo: p-hacking &amp; multiple comparisons &rarr;</a>
+          <a class="tag demo-link" href="./index.html#error">demo: type I &amp; II error &rarr;</a>
+        </div>
+      </section>
+
+      <!-- ============ 6. OUTCOME MAPPING ============ -->
+      <section class="demo anchor-offset" id="outcomes">
+        <h2>5 · Mapping to learning outcomes</h2>
+        <p class="cap">How each part of this project demonstrates a course learning objective.</p>
+        <div class="map-row"><div class="lo">LO1 · Think critically about research</div><div class="ev">Framed a testable question, separated correlation (Q1) from causation (Q2), and audited our own confounds.</div></div>
+        <div class="map-row"><div class="lo">LO2 · Evaluate quality (reliability, validity, triangulation)</div><div class="ev">Reported Cronbach's $\alpha$, distinguished reliability from validity, triangulated self-report with a behavioral task and a qualitative item.</div></div>
+        <div class="map-row"><div class="lo">LO3 · Communicate research clearly</div><div class="ev">Structured the work as an APA-style report with a results table, effect sizes, and a plain-language conclusion ready for a conference-style talk.</div></div>
+        <div class="map-row"><div class="lo">Methods breadth</div><div class="ev">Exercised sampling, survey design, correlation, true/quasi-experiment, and descriptive + inferential statistics in one coherent study.</div></div>
+      </section>
+
+      <!-- ============ 7. EXTENSIONS ============ -->
+      <section class="demo anchor-offset" id="extensions">
+        <h2>6 · Extensions &amp; variations</h2>
+        <ul class="plain">
+          <li><b>Add a factor:</b> turn Q2 into a $2\times2$ factorial — notifications (off/on) &times; study
+            environment (silent/social) — and look for an interaction (Sessions 12–14).</li>
+          <li><b>Go within-subjects:</b> a crossover design where each participant does both conditions in
+            random order increases power and controls for individual differences.</li>
+          <li><b>Deepen the qualitative arm:</b> run focus groups (Sessions 24–25) on Q8 responses and code
+            themes, then triangulate against the quantitative results.</li>
+          <li><b>Interrupted time series:</b> track attention daily across a phone-free week for a single cohort
+            (quasi-experimental, Session 20) to see the trajectory, not just pre/post.</li>
+          <li><b>Robustness:</b> replace Pearson $r$ with Spearman $\rho$ if attention scores are skewed;
+            bootstrap the confidence interval for $d$.</li>
+        </ul>
+        <div class="tags">
+          <a class="tag sess" href="./course.html#program">Sessions 12–14 · factorial designs</a>
+          <a class="tag sess" href="./course.html#program">Sessions 24–25 · focus groups</a>
+        </div>
+      </section>
+
+      <!-- ============ 8. REFERENCES ============ -->
+      <section class="demo anchor-offset" id="refs">
+        <h2>7 · References &amp; further reading</h2>
+        <ol class="refs">
+          <li>Privitera, G. J. <em>Research Methods for the Behavioral Sciences.</em> SAGE. — Ch. 5 (Sampling),
+            Ch. 8 (Correlational Designs), Ch. 10 (Between-Subjects), Ch. 11 (Quasi-Experimental), Ch. 13 (Descriptive Statistics).</li>
+          <li>American Psychological Association. <em>Publication Manual of the APA</em> (7th ed.). — report structure &amp; statistics reporting.</li>
+          <li>Cohen, J. (1988). <em>Statistical Power Analysis for the Behavioral Sciences</em> (2nd ed.). — effect-size conventions ($d$, $r$).</li>
+          <li>Field, A. <em>Discovering Statistics.</em> SAGE. — Pearson $r$, $t$-tests, partial correlation, Cronbach's $\alpha$.</li>
+          <li>Course syllabus — <a href="./SYLLABUS.pdf" target="_blank">Learning to Observe, Experiment and Survey (PDF)</a>.</li>
+        </ol>
+        <p class="cap" style="margin-top:0.8rem;">All numbers on this page are illustrative mock data created to demonstrate the analysis workflow — not results from a real study.</p>
+      </section>
+
+    </main>
+
+    <footer>
+      <span>research-methods-lab — Andrea Montana · IE BCSAI</span>
+      <span class="more">
+        <a href="./index.html">demos</a>
+        <a href="./course.html">course</a>
+        <a href="https://github.com/andreaisabelmontana/research-methods-lab" target="_blank">source</a>
+      </span>
+    </footer>
+  </body>
+</html>
