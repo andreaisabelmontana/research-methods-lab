@@ -89,6 +89,62 @@
       .tag.milestone { border-color: var(--warn); color: #B45309; background: rgba(245,158,11,0.10); font-weight: 600; }
 
       .anchor-offset { scroll-margin-top: 4rem; }
+
+      /* enrichment additions — reuse existing tokens only */
+      .module-outcomes {
+        margin: 0 0 0.7rem; padding: 0.6rem 0.8rem;
+        background: var(--accent-soft); border-radius: 6px;
+        font-size: 0.82rem; color: var(--ink-soft);
+      }
+      .module-outcomes .sub-h { margin-bottom: 0.25rem; }
+      .module-outcomes ul { margin: 0; padding-left: 1.1rem; }
+      .module-outcomes li { margin: 0.12rem 0; }
+      .module-overview { color: var(--ink-soft); font-size: 0.84rem; margin: 0 0 0.7rem; max-width: 74ch; }
+
+      .sess .sexplain { color: var(--ink-soft); font-size: 0.82rem; margin: 0.3rem 0 0; }
+      .sess .skey {
+        margin: 0.4rem 0 0; padding: 0.4rem 0.6rem;
+        border-left: 2px solid var(--accent); background: var(--accent-soft);
+        border-radius: 0 4px 4px 0; font-size: 0.8rem; color: var(--ink-soft);
+      }
+      .sess .skey b { color: var(--ink); }
+      .sess .sform {
+        font-family: var(--font-mono); font-size: 0.78rem; color: var(--ink);
+        background: var(--bg); border: 1px solid var(--rule);
+        border-radius: 4px; padding: 0.15em 0.45em; display: inline-block; margin-top: 0.2rem;
+      }
+      .read-note { color: var(--muted); font-size: 0.78rem; margin: 0.3rem 0 0; padding-left: 1.1rem; }
+      .read-note li { margin: 0.18rem 0; }
+      .read-note li b { color: var(--ink-soft); font-weight: 600; }
+
+      /* glossary */
+      .glossary { columns: 2; column-gap: 1.6rem; margin-top: 0.7rem; }
+      @media (max-width: 760px) { .glossary { columns: 1; } }
+      .glossary dt { font-weight: 700; font-size: 0.84rem; color: var(--ink); break-after: avoid; }
+      .glossary dd { margin: 0 0 0.6rem; font-size: 0.81rem; color: var(--ink-soft); break-inside: avoid; }
+      .glossary dd .sform { margin-top: 0.15rem; }
+
+      /* bibliography */
+      .biblio { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.55rem; }
+      .biblio .ref { font-size: 0.82rem; color: var(--ink-soft); border-bottom: 1px dotted var(--rule); padding-bottom: 0.5rem; }
+      .biblio .ref:last-child { border-bottom: 0; }
+      .biblio .ref b { color: var(--ink); }
+      .biblio .ref .where { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); }
+
+      /* assessment detail */
+      .assess-detail { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.9rem; }
+      .assess-item { border-top: 1px solid var(--rule); padding-top: 0.55rem; }
+      .assess-item .ahead { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+      .assess-item .ahead .aname { font-weight: 700; font-size: 0.86rem; color: var(--ink); }
+      .assess-item .ahead .awt { font-family: var(--font-mono); font-size: 0.74rem; color: var(--accent); }
+      .assess-item p { margin: 0.25rem 0 0; font-size: 0.81rem; color: var(--ink-soft); }
+      .callout {
+        margin-top: 0.8rem; padding: 0.55rem 0.75rem;
+        border: 1px solid var(--warn); border-left-width: 3px;
+        background: rgba(245,158,11,0.08); border-radius: 4px;
+        font-size: 0.81rem; color: var(--ink-soft);
+      }
+      .callout b { color: #B45309; }
     </style>
   </head>
   <body>
@@ -104,6 +160,8 @@
         <a href="#methodology">methodology</a>
         <a href="#assessment">assessment</a>
         <a href="#program">program</a>
+        <a href="#glossary">glossary</a>
+        <a href="#bibliography">readings</a>
         <a href="./SYLLABUS.pdf" target="_blank">syllabus PDF</a>
       </nav>
     </header>
@@ -169,6 +227,27 @@
           <div class="bar-row"><span class="lab">Discussions</span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">10% · 15h</span></div>
           <div class="bar-row"><span class="lab">Individual studying</span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">10% · 15h</span></div>
         </div>
+
+        <div class="two-col" style="margin-top:1.1rem">
+          <div>
+            <div class="sub-h">Labs vs. workshops</div>
+            <p class="lede" style="margin-top:0.3rem">
+              <b>Labs</b> teach you to analyze, interpret and describe the results of a study (correlational,
+              experimental, etc.) in proper APA format — the "read and report" half of the craft.
+              <b>Workshops</b> are experiential: you participate in or run real studies (between-participants,
+              mixed factorial, an observational field study) and then dissect the data you generated.
+            </p>
+          </div>
+          <div>
+            <div class="sub-h">Generative-AI policy</div>
+            <p class="lede" style="margin-top:0.3rem">
+              GenAI use is <b>encouraged</b> to build an informed, critical perspective — but low-effort prompts
+              give low-quality output, and you must assume any output is wrong until you can cross-check it.
+              Using AI must be <b>acknowledged</b> (listing prompts and how outputs were used); doing so does not
+              affect your grade, but undisclosed use violates academic-honesty policy.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section class="demo anchor-offset" id="assessment">
@@ -184,6 +263,61 @@
           <div class="bar-row"><span class="lab">Group research presentation <span class="skicker">(Sessions 28–29)</span></span><span class="bar-track"><span class="bar-fill" style="width:20%"></span></span><span class="pct">10%</span></div>
           <div class="bar-row"><span class="lab">Experiment participation <span class="skicker">(5 × 1%)</span></span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">5%</span></div>
           <div class="bar-row"><span class="lab">Discussion boards <span class="skicker">(5 × 1%)</span></span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="pct">5%</span></div>
+        </div>
+
+        <div class="sub-h" style="margin-top:1.1rem">What each component asks of you</div>
+        <div class="assess-detail">
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Midterm exam</span><span class="awt">30% · Session 19</span></div>
+            <p><b>Deliverable:</b> an in-class exam covering material from the lecture slides only.
+              <b>Evaluation:</b> multiple-choice questions plus one long-answer, theory-based question that
+              asks you to thoroughly explain a theory and apply it through two real-world examples.</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Final exam</span><span class="awt">25% · Session 30 · cumulative</span></div>
+            <p><b>Deliverable:</b> a cumulative in-class exam (slides only): multiple-choice plus a long-answer
+              question that asks you to weigh the advantages/disadvantages of methodological techniques and
+              identify all the methodological flaws in a study. <b>Evaluation:</b> graded against accuracy and
+              completeness; a minimum of <b>3.5/10</b> on this exam is required to pass, no matter your average.</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Short quizzes (5)</span><span class="awt">15% · 3% each</span></div>
+            <p><b>Deliverable:</b> five in-class quizzes of 10 multiple-choice questions, each testing the prior
+              class's material. <b>Evaluation:</b> falls in Sessions 5, 7, 9, 11 and 13 (dates confirmed in class
+              and on Blackboard).</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Class participation</span><span class="awt">10%</span></div>
+            <p><b>Deliverable:</b> active engagement in the short in-class activities, debates and small-group
+              exercises run most sessions. <b>Evaluation:</b> measured via periodic in-class activities that apply
+              concepts to novel situations; quality of engagement, not mere presence, is scored.</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Group research presentation</span><span class="awt">10% · Sessions 28–29</span></div>
+            <p><b>Deliverable:</b> in groups of 4–5, a PowerPoint/Google-Slides talk on two studies from a single
+              empirical article, mirroring a conference talk; submitted via Turnitin on the presentation date.
+              <b>Evaluation:</b> against a rubric posted on Blackboard (two sample presentations provided).</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Experiment participation (5)</span><span class="awt">5% · 1% each</span></div>
+            <p><b>Deliverable:</b> complete five anonymous online experiments (10–15 min each), one week per
+              experiment, that illustrate concepts from lecture. <b>Evaluation:</b> credit for completion;
+              responses are 100% anonymous.</p>
+          </div>
+          <div class="assess-item">
+            <div class="ahead"><span class="aname">Discussion boards (5)</span><span class="awt">5% · 1% each</span></div>
+            <p><b>Deliverable:</b> for each of five prompts, one original post plus one secondary reply to a
+              classmate, by Sunday midnight (Madrid). <b>Evaluation:</b> quality over quantity on a 0–2 scale per
+              board (0 = 0%, 1 = 0.5%, 2 = 1%).</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <b>Pass &amp; attendance rules.</b> Attendance is <em>not</em> graded, but failing the 80% attendance
+          rule forfeits both the ordinary and extraordinary (June/July re-sit) calls for the year — you must
+          re-enrol. You must also score at least <b>3.5/10 on the final exam</b> to pass, even if your weighted
+          average exceeds 5.0. Late assignments lose <b>5% per 24 h</b>; the re-sit is a single comprehensive exam
+          capped at <b>8.0/10</b>, and continuous-evaluation marks do not carry over to it.
         </div>
       </section>
 
@@ -204,6 +338,19 @@
             <h3>The Research Process</h3>
             <span class="mdesc">goals, questions, common sense vs. science, judgment biases</span>
           </div>
+          <p class="module-overview">Why we cannot simply trust intuition. Before learning <em>how</em> to do research, this
+            module shows <em>why</em> we need it: human judgment is systematically biased, so "common sense" is an
+            unreliable guide to truth. It surveys the major cognitive biases, then introduces the scientific method as
+            the disciplined alternative — empirical, testable, and self-correcting.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Distinguish science from common sense and pseudoscience, and name the goals of empirical research.</li>
+              <li>Identify common cognitive biases (confirmation, hindsight, attribution, self-serving) in everyday reasoning.</li>
+              <li>State a testable hypothesis and write an operational definition of a construct.</li>
+              <li>Explain reliability, validity, replication, and Type I vs. Type II error.</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">01</div>
@@ -213,6 +360,12 @@
                   <li>Objectives, contents, schedule, evaluation system, testing, common sense</li>
                   <li>The role of common sense; how to think about ourselves and others</li>
                 </ul>
+                <p class="sexplain">Sets up the course logistics and its central tension: our intuitions about
+                  behaviour feel obvious yet are often wrong or contradictory ("opposites attract" vs. "birds of a
+                  feather flock together"). Science exists precisely because common sense cannot adjudicate between
+                  such claims.</p>
+                <p class="skey"><b>Key idea:</b> "common sense" frequently produces mutually contradictory predictions,
+                  so we need systematic, empirical methods to decide which is actually true.</p>
                 <div class="tags">
                   <span class="tag exer">"So you think you know?" common-sense exercise</span>
                   <span class="tag exer">Science vs. pseudoscience (small groups)</span>
@@ -227,10 +380,21 @@
                   <li>Cognitive biases, confirmation bias, self-fulfilling prophecy</li>
                   <li>Belief perseverance error, overconfidence effect</li>
                 </ul>
+                <p class="sexplain"><b>Confirmation bias</b> is the tendency to seek and weight evidence that supports
+                  what we already believe. A <b>self-fulfilling prophecy</b> occurs when an expectation changes
+                  behaviour so that the expectation comes true. <b>Belief perseverance</b> is clinging to a belief even
+                  after its evidence is discredited; the <b>overconfidence effect</b> is systematically overrating the
+                  accuracy of our own judgments.</p>
+                <p class="skey"><b>Why it matters:</b> these biases are exactly what an experimental design — blinding,
+                  control groups, pre-registered hypotheses — is built to neutralise.</p>
                 <div class="tags">
                   <span class="tag exer">How preconceptions/biases affect evaluations of self &amp; others</span>
                   <span class="tag read">Judgment under uncertainty</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Judgment under uncertainty</b> — Tversky &amp; Kahneman's classic on the heuristics
+                    (representativeness, availability, anchoring) behind systematic error. <span class="skicker">(Session 2)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -240,10 +404,20 @@
                 <ul class="topics">
                   <li>Fundamental attribution error, actor–observer effect, self-serving bias</li>
                 </ul>
+                <p class="sexplain">The <b>fundamental attribution error (FAE)</b> is over-attributing others'
+                  behaviour to disposition while underrating the situation. The <b>actor–observer effect</b> is the
+                  flip: we explain our <em>own</em> behaviour situationally but others' dispositionally. The
+                  <b>self-serving bias</b> credits our successes to ourselves and blames failures on circumstances.</p>
+                <p class="skey"><b>Key idea:</b> attribution biases distort how we interpret data about people — a
+                  direct threat to the validity of observational and survey research.</p>
                 <div class="tags">
                   <span class="tag exer">Attributions of success/failure for self vs. others</span>
                   <span class="tag read">From the FAE to the truly FAE</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>From the fundamental attribution error to the truly FAE</b> — revisits how strongly observers
+                    discount situational forces. <span class="skicker">(Session 3)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -253,11 +427,23 @@
                 <ul class="topics">
                   <li>Hindsight bias, false consensus / false uniqueness effect</li>
                 </ul>
+                <p class="sexplain"><b>Hindsight bias</b> ("I knew it all along") is the tendency, once an outcome is
+                  known, to see it as having been predictable. The <b>false-consensus effect</b> overestimates how
+                  many others share our views; the <b>false-uniqueness effect</b> underestimates how many share our
+                  abilities or desirable traits.</p>
+                <p class="skey"><b>Key idea:</b> hindsight bias is why predictions must be recorded <em>before</em> the
+                  data are seen — the logic behind pre-registration.</p>
                 <div class="tags">
                   <span class="tag exer">Assumptions of hindsight bias &amp; false-consensus/uniqueness</span>
                   <span class="tag read">Self-esteem &amp; self-serving bias</span>
                   <span class="tag read">Cross-cultural false-consensus effect</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Self-esteem &amp; self-serving bias in reactions to positive and negative events</b> — how
+                    self-esteem moderates the self-serving attribution pattern. <span class="skicker">(Session 4)</span></li>
+                  <li><b>Cross-cultural examination of the false-consensus effect</b> — tests whether the bias
+                    generalises across cultures. <span class="skicker">(Session 4)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -268,6 +454,13 @@
                   <li>What is science? Science vs. common sense; the scientific method</li>
                   <li>Goals/types of research, features of empirical research, hypotheses &amp; theories</li>
                 </ul>
+                <p class="sexplain">Science is a systematic, empirical, self-correcting way of knowing with four goals:
+                  <b>describe, predict, explain</b> and (where possible) <b>control</b>. A <b>theory</b> is a broad
+                  explanatory framework; a <b>hypothesis</b> is a specific, falsifiable prediction derived from it. An
+                  <b>operational definition</b> specifies a construct in terms of the exact operations used to measure
+                  or manipulate it.</p>
+                <p class="skey"><b>Key idea:</b> a good hypothesis must be <b>falsifiable</b> — stated so that some
+                  conceivable observation could prove it wrong.</p>
                 <div class="tags">
                   <span class="tag milestone">Quiz #1 (sessions 2–4)</span>
                   <span class="tag exer">Creating manipulations, measures &amp; control groups</span>
@@ -275,6 +468,12 @@
                   <span class="tag read">Ch.1 Introduction to Scientific Thinking</span>
                   <span class="tag read">Ch.2 Generating Testable Ideas</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.1 Introduction to Scientific Thinking</b> (pg. 3–19) — what makes knowledge scientific;
+                    the empirical, self-correcting nature of inquiry. <span class="skicker">(Session 5)</span></li>
+                  <li><b>Ch.2 Generating Testable Ideas</b> (pg. 27–34) — moving from a vague question to a
+                    falsifiable, operationalised hypothesis. <span class="skicker">(Session 5)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -284,6 +483,14 @@
                 <ul class="topics">
                   <li>Science vs. pseudoscience, types of validity, replication, Type I &amp; II error</li>
                 </ul>
+                <p class="sexplain"><b>Pseudoscience</b> mimics science but resists falsification and ignores
+                  disconfirmation. <b>Validity</b> comes in kinds — construct, internal, external, statistical-conclusion.
+                  <b>Replication</b> is repeating a study to check that a result is real. A <b>Type I error</b> is a
+                  false positive (rejecting a true null); a <b>Type II error</b> is a false negative (missing a real
+                  effect).</p>
+                <p class="skey"><b>Decision table:</b> with significance level <span class="sform">α = P(Type I)</span>
+                  and <span class="sform">β = P(Type II)</span>, statistical <b>power = 1 − β</b> is the chance of
+                  detecting a real effect.</p>
                 <div class="tags">
                   <span class="tag exer">Interactive illustration of Type I vs. Type II error</span>
                   <span class="tag read">Ch.1 Distinguishing Science from Pseudoscience</span>
@@ -294,6 +501,16 @@
                   <a class="tag demo-link" href="./index.html#dart">demo: reliability vs validity →</a>
                   <a class="tag demo-link" href="./index.html#phack">demo: p-hacking &amp; replication →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.1 Distinguishing Science from Pseudoscience</b> (pg. 20–27) — the demarcation criteria
+                    (falsifiability, openness to revision). <span class="skicker">(Session 6)</span></li>
+                  <li><b>Ch.4 Reliability &amp; Validity of a Measurement</b> (pg. 93–98) — consistency vs.
+                    accuracy of measures. <span class="skicker">(Session 6)</span></li>
+                  <li><b>Ch.4 Ethics in Focus: Replication as a Gauge for Fraud?</b> (pg. 103) — replication as a
+                    safeguard against fabricated results. <span class="skicker">(Session 6)</span></li>
+                  <li><b>Ch.14 Types of Error and Power</b> (pg. 401–402) — formal treatment of Type I/II error and
+                    statistical power. <span class="skicker">(Session 6)</span></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -306,6 +523,18 @@
             <h3>Descriptive &amp; Correlational Methodologies</h3>
             <span class="mdesc">sampling, surveys, observation, correlation vs. causation</span>
           </div>
+          <p class="module-overview">Measuring the world without manipulating it. These non-experimental designs
+            describe variables and the relationships between them. They are essential when manipulation is impossible
+            or unethical — but they cannot, on their own, establish cause.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Choose between case study, naturalistic observation, survey and correlational designs.</li>
+              <li>Draw a representative sample and explain how sampling error shrinks with sample size.</li>
+              <li>Read a scatterplot and interpret a correlation coefficient's sign and magnitude.</li>
+              <li>Explain the directionality and third-variable problems behind "correlation ≠ causation".</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">07</div>
@@ -314,6 +543,13 @@
                 <ul class="topics">
                   <li>Features of descriptive research designs, representative samples, case studies</li>
                 </ul>
+                <p class="sexplain">Descriptive designs aim to characterise a phenomenon as it naturally occurs. A
+                  <b>representative sample</b> mirrors the population on relevant characteristics so findings
+                  generalise; a <b>case study</b> is a deep, qualitative examination of a single person, group or
+                  event — rich but hard to generalise. <b>Operationalisation</b> turns abstract constructs into
+                  measurable variables.</p>
+                <p class="skey"><b>Key idea:</b> random sampling protects external validity (generalisability);
+                  random <em>assignment</em>, introduced later, protects internal validity (causal inference).</p>
                 <div class="tags">
                   <span class="tag milestone">Quiz #2 (session 5)</span>
                   <span class="tag exer">Applied case study: deception detection</span>
@@ -321,6 +557,12 @@
                   <span class="tag read">Ch.5 Sampling from Populations</span>
                   <a class="tag demo-link" href="./index.html#sample">demo: population, sample &amp; sampling error →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.4 Identifying Scientific Variables</b> (pg. 83–88) — constructs, variables and how to
+                    operationalise them. <span class="skicker">(Session 7)</span></li>
+                  <li><b>Ch.5 Sampling from Populations</b> (pg. 113–129) — probability vs. non-probability sampling
+                    and representativeness. <span class="skicker">(Session 7)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -331,6 +573,14 @@
                   <li>Surveys, naturalistic observation; strengths &amp; weaknesses of each</li>
                   <li>Descriptive vs. correlational designs, causation, third variables, issues</li>
                 </ul>
+                <p class="sexplain"><b>Surveys</b> efficiently capture self-reported attitudes at scale but are
+                  vulnerable to wording, order and social-desirability effects. <b>Naturalistic observation</b> records
+                  behaviour in its real setting with high ecological validity, but risks observer bias and reactivity.
+                  Descriptive statistics summarise data via measures of <b>central tendency</b> (mean, median, mode)
+                  and <b>spread</b> (range, variance, SD).</p>
+                <p class="skey"><b>Key idea:</b> the <b>mean</b> is <span class="sform">x̄ = Σxᵢ / n</span> and the
+                  standard deviation <span class="sform">s = √(Σ(xᵢ − x̄)² / (n−1))</span> — together they describe
+                  "typical value" and "typical distance from typical".</p>
                 <div class="tags">
                   <span class="tag exer">Creating a survey — what makes a good survey?</span>
                   <span class="tag exer">Three procedures to improve causal validity</span>
@@ -339,6 +589,12 @@
                   <a class="tag demo-link" href="./index.html#moe">demo: sample size vs margin of error →</a>
                   <a class="tag demo-link" href="./index.html#likert">demo: survey question bias →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.6 Choosing a Research Design</b> (pg. 139–146) — matching the design to the research
+                    question and its constraints. <span class="skicker">(Session 8)</span></li>
+                  <li><b>Ch.13 Descriptive Statistics: Why Summarize Data?</b> (pg. 368–378) — central tendency,
+                    variability and when each summary is appropriate. <span class="skicker">(Session 8)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -350,6 +606,13 @@
                   <li>Scatterplots, directionality &amp; third-variable problems, correlation vs. causation</li>
                   <li>Spurious correlations; procedures to improve understanding of correlations</li>
                 </ul>
+                <p class="sexplain">A <b>correlation</b> quantifies how two variables move together, from −1 (perfect
+                  inverse) through 0 (none) to +1 (perfect positive). Causation cannot be inferred because of the
+                  <b>directionality problem</b> (does A→B or B→A?) and the <b>third-variable problem</b> (some C drives
+                  both). <b>Spurious correlations</b> are strong-but-meaningless associations driven by chance or a
+                  lurking variable.</p>
+                <p class="skey"><b>Key idea:</b> Pearson's <span class="sform">r = cov(X,Y) / (sₓ · s_y)</span>; and
+                  <b>r² </b>is the proportion of variance in one variable explained by the other.</p>
                 <div class="tags">
                   <span class="tag milestone">Quiz #3 (session 6)</span>
                   <span class="tag exer">Creating a correlational study</span>
@@ -357,6 +620,10 @@
                   <a class="tag demo-link" href="./index.html#corr">demo: correlation &amp; scatterplots →</a>
                   <a class="tag demo-link" href="./index.html#simpson">demo: Simpson's paradox →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.8 Correlational Designs</b> (pg. 217–227) — computing and interpreting correlations and
+                    the limits on causal claims. <span class="skicker">(Session 9)</span></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -369,6 +636,19 @@
             <h3>Experimental Methodologies</h3>
             <span class="mdesc">manipulation, randomization, control, factorial designs, workshops</span>
           </div>
+          <p class="module-overview">The only design that establishes cause. By <em>manipulating</em> an independent
+            variable and <em>randomly assigning</em> participants to conditions, experiments rule out alternative
+            explanations and license causal claims. This longest module builds from the two-group experiment up to
+            multi-factor designs, then puts theory into practice with two hands-on workshops before the midterm.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Identify the IV, DV, control group and confounds in any experiment.</li>
+              <li>Explain how randomization and blinding control participant and experimenter effects.</li>
+              <li>Read a factorial design, distinguishing main effects from interactions.</li>
+              <li>Run and interpret data from between-participants and mixed factorial experiments.</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">10</div>
@@ -378,12 +658,23 @@
                   <li>Features of experimental studies: manipulation, randomization, control groups</li>
                   <li>Confounding variables, placebo effect</li>
                 </ul>
+                <p class="sexplain">An experiment <b>manipulates</b> an independent variable (IV) and measures a
+                  dependent variable (DV) while holding everything else constant. <b>Random assignment</b> distributes
+                  unknown differences evenly across conditions, so the <b>control group</b> provides a valid baseline.
+                  A <b>confound</b> is any variable that varies systematically with the IV and offers a rival
+                  explanation; the <b>placebo effect</b> is change caused by expectation rather than treatment.</p>
+                <p class="skey"><b>Key idea:</b> manipulation + random assignment + a control group together = internal
+                  validity, the licence to say "X <em>caused</em> Y".</p>
                 <div class="tags">
                   <span class="tag exer">Whole class: identifying components of an experimental study</span>
                   <span class="tag read">Ch.9 Single-Case Experimental Designs</span>
                   <a class="tag demo-link" href="./index.html#confound">demo: confounding &amp; randomization →</a>
                   <a class="tag demo-link" href="./index.html#abtest">demo: two-group experiment &amp; effect size →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.9 Single-Case Experimental Designs</b> (pg. 256–272) — establishing causality with one or
+                    few participants via baseline/treatment phases. <span class="skicker">(Session 10)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -393,11 +684,22 @@
                 <ul class="topics">
                   <li>Participant/experimenter effects, single/double blind, applications, meta-analysis</li>
                 </ul>
+                <p class="sexplain"><b>Participant effects</b> (e.g. demand characteristics) and <b>experimenter
+                  effects</b> (unintentional cueing) can bias results. <b>Single-blind</b> designs keep participants
+                  unaware of condition; <b>double-blind</b> designs keep the experimenter unaware too. A
+                  <b>meta-analysis</b> statistically combines many studies' effect sizes to estimate the true effect
+                  more precisely than any single study.</p>
+                <p class="skey"><b>Key idea:</b> blinding removes expectancy as a confound — neither side can
+                  unconsciously nudge the outcome toward the hypothesis.</p>
                 <div class="tags">
                   <span class="tag milestone">Quiz #4 (sessions 7–8)</span>
                   <span class="tag exer">Creating an experiment: identifying/manipulating/measuring IVs &amp; DVs</span>
                   <span class="tag read">Ch.9 Single-Case Experimental Designs</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.9 Single-Case Experimental Designs</b> (pg. 256–272) — continued: reversal and
+                    multiple-baseline logic. <span class="skicker">(Session 11)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -407,11 +709,23 @@
                 <ul class="topics">
                   <li>Factorial designs, main effects &amp; 2-way/3-way interactions, statistical tests</li>
                 </ul>
+                <p class="sexplain">A <b>factorial design</b> crosses two or more IVs (factors) so every combination of
+                  levels is tested — a 2×2 has four cells. This is efficient and, crucially, reveals
+                  <b>interactions</b>: cases where the effect of one factor <em>depends on</em> the level of another.
+                  These designs are typically analysed with a factorial <b>ANOVA</b>.</p>
+                <p class="skey"><b>Key idea:</b> a <b>2×3 factorial</b> = 2 levels of factor A × 3 of factor B = 6
+                  conditions; it yields a main effect of A, a main effect of B, and an A×B interaction.</p>
                 <div class="tags">
                   <span class="tag exer">Create an experiment using a factorial design</span>
                   <span class="tag read">Ch.12 Factorial Experimental Designs</span>
                   <span class="tag read">Ch.12 Main Effects and Interactions</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.12 Factorial Experimental Designs</b> (pg. 335–346) — structure and notation of
+                    multi-factor experiments. <span class="skicker">(Session 12)</span></li>
+                  <li><b>Ch.12 Main Effects and Interactions</b> (pg. 342–355) — defining and reading main effects vs.
+                    interactions. <span class="skicker">(Sessions 12–13)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -421,11 +735,21 @@
                 <ul class="topics">
                   <li>Main effects, interactions, simple main effects, floor/ceiling effects</li>
                 </ul>
+                <p class="sexplain">A <b>main effect</b> is the overall effect of one factor averaged across the other.
+                  A <b>simple main effect</b> is the effect of one factor at a single level of another — what you probe
+                  when an interaction is significant. <b>Floor/ceiling effects</b> occur when a measure bottoms out or
+                  tops out, masking real differences.</p>
+                <p class="skey"><b>Key idea:</b> on an interaction plot, <b>non-parallel lines</b> signal an
+                  interaction; parallel lines signal main effects only.</p>
                 <div class="tags">
                   <span class="tag milestone">Quiz #5 (session 9)</span>
                   <span class="tag exer">Identifying main effects/interactions using real data</span>
                   <span class="tag read">Ch.12 Main Effects and Interactions</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.12 Main Effects and Interactions</b> (pg. 342–355) — interpreting interaction plots and
+                    simple main effects. <span class="skicker">(Session 13)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -435,6 +759,8 @@
                 <ul class="topics">
                   <li>Identifying main effects, interactions, control groups &amp; confounds in studies</li>
                 </ul>
+                <p class="sexplain">Applied practice: working through published studies to spot the design's factors,
+                  diagnose confounds, and decide which pattern of means reflects a main effect versus an interaction.</p>
                 <div class="tags">
                   <span class="tag exer">In-class assignment on main effects &amp; interactions (HMW 1)</span>
                 </div>
@@ -447,10 +773,18 @@
                 <ul class="topics">
                   <li>Participate in a between-participants design experiment (individual basis)</li>
                 </ul>
+                <p class="sexplain">In a <b>between-participants (between-subjects)</b> design each person experiences
+                  only one condition, so comparisons are <em>across</em> different groups. This avoids carryover
+                  effects but requires more participants and relies on randomization to equate the groups. You take
+                  part as a participant, then analyse the resulting data next session.</p>
                 <div class="tags">
                   <span class="tag exer">Workshop: between-participants experiment</span>
                   <span class="tag read">Ch.10 Between-Subjects Experimental Designs</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.10 Between-Subjects Experimental Designs</b> (pg. 273–282) — independent-groups logic and
+                    when to prefer it. <span class="skicker">(Session 15)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -460,10 +794,19 @@
                 <ul class="topics">
                   <li>Discussion of between-participants experimental data from Workshop 1</li>
                 </ul>
+                <p class="sexplain">The data you generated are analysed with a factorial <b>ANOVA</b>, which partitions
+                  variance to test each main effect and interaction at once. The session connects the abstract design
+                  to a concrete output table and what its F-tests mean.</p>
+                <p class="skey"><b>Key idea:</b> ANOVA compares between-group to within-group variance —
+                  <span class="sform">F = MS_between / MS_within</span>; large F ⇒ groups differ more than chance.</p>
                 <div class="tags">
                   <span class="tag exer">In-class assignment on confounds/components of experiments (HMW 2)</span>
                   <span class="tag read">Ch.10 General Instructions for Conducting a Factorial ANOVA</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.10 General Instructions for Conducting a Factorial ANOVA</b> (pg. 356–364) — step-by-step
+                    running and reporting of a factorial ANOVA. <span class="skicker">(Session 16)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -473,10 +816,18 @@
                 <ul class="topics">
                   <li>Participate in a mixed factorial design experiment (individual basis)</li>
                 </ul>
+                <p class="sexplain">A <b>mixed factorial</b> design combines at least one between-participants factor
+                  with at least one within-participants factor (where every person sees all levels). It blends the
+                  efficiency of repeated measures with the cleanliness of independent groups. As before, you
+                  participate now and analyse the data next session.</p>
                 <div class="tags">
                   <span class="tag exer">Workshop: mixed factorial experiment</span>
                   <span class="tag read">Ch.10 Mixed Participants Experimental Designs</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.10 Mixed Participants Experimental Designs</b> (pg. 273–282) — combining within- and
+                    between-subjects factors in one study. <span class="skicker">(Session 17)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -486,15 +837,26 @@
                 <ul class="topics">
                   <li>Discussion of mixed-design experimental data from Workshop 2; midterm preparation</li>
                 </ul>
+                <p class="sexplain">Analysing the mixed-design data and weighing the trade-offs: within-subjects designs
+                  gain power by removing individual differences but risk order/carryover effects (countered by
+                  counterbalancing); between-subjects designs avoid those but need larger samples. Doubles as midterm
+                  review.</p>
                 <div class="tags">
                   <span class="tag read">Ch.11 Comparing Between-Subjects / Within-Subjects Designs</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.11 Comparing Between-Subjects / Within-Subjects Designs</b> (pg. 328–334) — the
+                    power-vs-carryover trade-off and counterbalancing. <span class="skicker">(Session 18)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
               <div class="snum">19</div>
               <div>
                 <div class="stitle">Midterm Exam — in class</div>
+                <p class="sexplain">Covers material from the lecture slides only (Modules 1–3). Format: multiple-choice
+                  plus one long-answer question requiring you to explain a theory and apply it through two real-world
+                  examples.</p>
                 <div class="tags">
                   <span class="tag milestone">Midterm exam (30%)</span>
                 </div>
@@ -510,6 +872,20 @@
             <h3>Quasi-Experimental &amp; Applied Research and Measurement</h3>
             <span class="mdesc">quasi-experiments, applied research, psychological measures, ethics</span>
           </div>
+          <p class="module-overview">When you cannot randomise. Real-world questions often forbid random assignment for
+            practical or ethical reasons. This module covers quasi-experiments (which compare pre-existing groups or
+            time points), applied research that targets concrete problems, the toolbox of psychological measures, and
+            the ethical framework — IRBs, consent, the treatment of human and animal participants — that governs it
+            all.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Distinguish a quasi-experiment from a true experiment and name the threats to its validity.</li>
+              <li>Describe pre/post-test and interrupted time-series designs.</li>
+              <li>Compare self-report, behavioural and physiological measures on reliability and reactivity.</li>
+              <li>Apply core research-ethics principles to human and animal studies.</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">20</div>
@@ -518,10 +894,21 @@
                 <ul class="topics">
                   <li>Quasi-experimental research, pre/post-test designs, interrupted time-series, issues</li>
                 </ul>
+                <p class="sexplain">A <b>quasi-experiment</b> manipulates or compares conditions but <em>without</em>
+                  random assignment — often using pre-existing groups. A <b>pre/post-test</b> design measures before and
+                  after an intervention; an <b>interrupted time-series</b> takes many measurements before and after a
+                  change to see whether the trend shifts. Without randomization, selection bias and history are
+                  standing threats to internal validity.</p>
+                <p class="skey"><b>Key idea:</b> quasi-experiments trade some causal certainty for feasibility — strong
+                  on external validity, weaker on internal validity.</p>
                 <div class="tags">
                   <span class="tag exer">Design a quasi-experiment and test its effectiveness</span>
                   <span class="tag read">Ch.11 Quasi-Experimental Designs</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.11 Quasi-Experimental Designs</b> (pg. 240–250) — nonequivalent-groups and time-series
+                    designs and their validity threats. <span class="skicker">(Session 20)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -531,10 +918,20 @@
                 <ul class="topics">
                   <li>Applied research: history, real-world examples, pre/post-tests, ethical issues</li>
                 </ul>
+                <p class="sexplain"><b>Applied research</b> targets a concrete, practical problem (does this policy,
+                  therapy or product work?), in contrast to <b>basic research</b>, which seeks knowledge for its own
+                  sake. It typically prioritises external validity and real-world impact, and raises distinctive
+                  cost–benefit and ethical questions when interventions touch people's lives.</p>
+                <p class="skey"><b>Key idea:</b> applied vs. basic is about the <em>goal</em> (solve a problem vs.
+                  understand a phenomenon), not the method — either can use experiments or surveys.</p>
                 <div class="tags">
                   <span class="tag exer">Costs/benefits &amp; ethical implications of applied research</span>
                   <span class="tag read">Quasi-Experimental Designs &amp; Applied Research</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Quasi-Experimental Designs &amp; Applied Research</b> (Blackboard) — bridges quasi-experimental
+                    method with real-world applied problems. <span class="skicker">(Session 21)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -546,6 +943,14 @@
                   <li>Strengths/weaknesses of measurement tools, reliability of measures</li>
                   <li>Ethical research, human/animal participants, research ethics boards</li>
                 </ul>
+                <p class="sexplain">Measures vary in directness and reactivity: <b>direct self-report</b> (asking people)
+                  is easy but fakeable; <b>indirect</b> measures sidestep self-presentation; <b>behavioural</b> and
+                  <b>physiological</b> measures (e.g. reaction time, heart rate) are harder to fake but costlier. A
+                  measure must be both <b>reliable</b> (consistent) and <b>valid</b> (measures what it claims). Ethics —
+                  informed consent, minimising harm, and oversight by a <b>research ethics board / IRB</b> — constrains
+                  every choice.</p>
+                <p class="skey"><b>Key idea:</b> reliability is necessary but not sufficient for validity — a scale
+                  can be perfectly consistent yet consistently wrong.</p>
                 <div class="tags">
                   <span class="tag exer">Guest-lecture video on psychological measures (take-home)</span>
                   <span class="tag exer">"Do animals have rights?" — discussion board</span>
@@ -554,6 +959,16 @@
                   <span class="tag read">Ethics of CIA/military contracting</span>
                   <span class="tag read">Conflicts of ethical choices in human research</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Should we trust web-based studies?</b> (Blackboard) — data quality and validity of
+                    online data collection. <span class="skicker">(Session 22)</span></li>
+                  <li><b>Ch.3 Research Ethics</b> (pg. 53–80) — consent, deception, debriefing, IRBs and animal
+                    welfare. <span class="skicker">(Session 22)</span></li>
+                  <li><b>Ethics of CIA &amp; military contracting by psychiatrists/psychologists</b> (Blackboard) —
+                    a hard case on dual-use research ethics. <span class="skicker">(Session 22)</span></li>
+                  <li><b>Scientific rewards and conflicts of ethical choices in human research</b> (Blackboard) —
+                    how career incentives can collide with ethics. <span class="skicker">(Session 22)</span></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -566,6 +981,19 @@
             <h3>Qualitative Methodologies</h3>
             <span class="mdesc">interviews, focus groups, surveys, observational field study</span>
           </div>
+          <p class="module-overview">Understanding meaning, not just counting it. Qualitative methods ask "how" and
+            "why", producing rich textual data about experience and meaning rather than numbers. This module covers
+            interviews and focus groups and culminates in a group <b>observational field study</b> — applying
+            qualitative methods to real data you collect yourselves.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Contrast qualitative and quantitative aims and when each is appropriate.</li>
+              <li>Choose an interview type and write a workable interview protocol.</li>
+              <li>Plan and moderate a focus group and recognise its data-analysis challenges.</li>
+              <li>Design and run a small observational field study and take usable field notes.</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">23</div>
@@ -575,11 +1003,23 @@
                   <li>Qualitative vs. quantitative research, types of sampling, types of interviews</li>
                   <li>Interview process; creating &amp; conducting an interview; strengths/weaknesses</li>
                 </ul>
+                <p class="sexplain"><b>Qualitative</b> research seeks depth and meaning (words, themes);
+                  <b>quantitative</b> seeks breadth and measurement (numbers, statistics). Interviews range from
+                  <b>structured</b> (fixed questions, comparable answers) through <b>semi-structured</b> to
+                  <b>unstructured</b> (open, exploratory). Qualitative work typically uses <b>purposive</b> rather than
+                  random sampling.</p>
+                <p class="skey"><b>Key idea:</b> more structure = more comparability but less depth; the interview type
+                  should follow the research question.</p>
                 <div class="tags">
                   <span class="tag exer">Interview development: type, population &amp; questions</span>
                   <span class="tag read">Writing interview protocol &amp; conducting interviews</span>
                   <a class="tag demo-link" href="./index.html#likert">demo: survey question bias →</a>
                 </div>
+                <ul class="read-note">
+                  <li><b>Writing interview protocol and conducting interviews: tips for students new to qualitative
+                    research</b> (Blackboard) — a practical how-to for first-time interviewers.
+                    <span class="skicker">(Session 23)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -589,10 +1029,20 @@
                 <ul class="topics">
                   <li>Focus groups: processes &amp; protocol, data analyses, issues</li>
                 </ul>
+                <p class="sexplain">A <b>focus group</b> is a moderated discussion (typically 6–8 people) whose value lies
+                  in the <em>interaction</em> between participants, surfacing shared and divergent views. Challenges
+                  include <b>groupthink</b>, dominant speakers, and the difficulty of coding open-ended talk into
+                  themes. Focus groups and surveys are often combined — qualitative depth informs quantitative scale.</p>
+                <p class="skey"><b>Key idea:</b> the moderator's job is to elicit interaction without leading it —
+                  poor moderation is itself a confound.</p>
                 <div class="tags">
                   <span class="tag exer">Choose a topic, identify moderator, conduct focus group (6–8 people)</span>
                   <span class="tag read">Focus groups &amp; surveys as complementary methods</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Focus groups and surveys as complementary research methods: a case example</b> (Blackboard) —
+                    shows how the two methods triangulate. <span class="skicker">(Session 24)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -602,6 +1052,9 @@
                 <ul class="topics">
                   <li>Focus groups continued…</li>
                 </ul>
+                <p class="sexplain">Continued practice running and analysing focus-group data: moving from raw
+                  transcript to coded themes, and judging the trustworthiness of qualitative conclusions
+                  (credibility, transferability) — the qualitative analogues of validity.</p>
               </div>
             </div>
             <div class="sess">
@@ -611,10 +1064,18 @@
                 <ul class="topics">
                   <li>Applied qualitative methods: conducting field research / gathering data</li>
                 </ul>
+                <p class="sexplain">The capstone of the qualitative module: in groups you conduct a real
+                  <b>observational field study</b>, gathering data in a natural setting and recording systematic
+                  <b>field notes</b>. This is where sampling, observation, ethics and analysis come together on data
+                  you collected yourselves — feeding directly into the group research report and presentation.</p>
                 <div class="tags">
                   <span class="tag exer">Field study: conduct research &amp; gather data</span>
                   <span class="tag read">Revisiting field experimentation: field notes for the future</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Revisiting field experimentation: field notes for the future</b> (Blackboard) — practical
+                    guidance on observing and note-taking in the field. <span class="skicker">(Session 26)</span></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -627,6 +1088,18 @@
             <h3>Communicating Scientific Knowledge</h3>
             <span class="mdesc">APA writing, manuscripts, presentations, final exam</span>
           </div>
+          <p class="module-overview">Research that isn't communicated doesn't count. The final module turns findings into
+            shareable knowledge: the structure of an APA manuscript, citation and plagiarism rules, and how to present
+            results as a conference-style talk. It closes with the group presentation and the cumulative final exam.</p>
+          <div class="module-outcomes">
+            <div class="sub-h">By the end of this module you can</div>
+            <ul>
+              <li>Structure a report in APA format (title page, intro, method, results, discussion, references).</li>
+              <li>Cite sources correctly and avoid plagiarism.</li>
+              <li>Present two studies from an article as a clear, conference-style talk.</li>
+              <li>Critique a study's design and defend methodological choices under exam conditions.</li>
+            </ul>
+          </div>
           <div class="timeline">
             <div class="sess">
               <div class="snum">27</div>
@@ -636,10 +1109,22 @@
                   <li>Structured writing, formatting, title page, references, citing, plagiarism</li>
                   <li>Group project (in-class / take-home if necessary)</li>
                 </ul>
+                <p class="sexplain"><b>APA format</b> gives research a shared structure — title page, abstract,
+                  introduction, method, results, discussion and references — so readers can find and evaluate each part
+                  quickly. Correct <b>citation</b> credits prior work and lets claims be traced; failing to do so is
+                  <b>plagiarism</b>. The session prepares the written backbone of the group project.</p>
+                <p class="skey"><b>Key idea:</b> the IMRaD structure (Introduction, Method, Results, Discussion) maps
+                  onto the logic of inquiry itself — question, how, what, so-what.</p>
                 <div class="tags">
                   <span class="tag read">Ch.15 Communicating Research: Manuscripts, Posters &amp; Talks</span>
                   <span class="tag read">APA-Style Writing &amp; Sample Manuscript</span>
                 </div>
+                <ul class="read-note">
+                  <li><b>Ch.15 Communicating Research: Preparing Manuscripts, Posters, and Talks</b>
+                    (pg. 425–433, 447–454) — how to write up and present results. <span class="skicker">(Session 27)</span></li>
+                  <li><b>APA-Style Writing, Sample Manuscript</b> (pg. 455–503) — an annotated model paper to imitate.
+                    <span class="skicker">(Session 27)</span></li>
+                </ul>
               </div>
             </div>
             <div class="sess">
@@ -649,6 +1134,9 @@
                 <ul class="topics">
                   <li>Discussion, evaluation and feedback · submit via Turnitin on presentation date</li>
                 </ul>
+                <p class="sexplain">In groups of 4–5, present two studies from a single empirical article in the format
+                  of a conference talk, followed by class discussion and feedback. Graded against the rubric posted on
+                  Blackboard.</p>
                 <div class="tags">
                   <span class="tag milestone">Group presentation (10%)</span>
                 </div>
@@ -661,6 +1149,8 @@
                 <ul class="topics">
                   <li>Discussion, evaluation and feedback · submit via Turnitin on presentation date</li>
                 </ul>
+                <p class="sexplain">Remaining groups present, with the same discussion-and-feedback format. Acts as a
+                  cumulative review of design concepts as the class critiques each study's methodology.</p>
                 <div class="tags">
                   <span class="tag milestone">Group presentation (10%)</span>
                 </div>
@@ -673,12 +1163,143 @@
                 <ul class="topics">
                   <li>Cumulative; multiple-choice plus long-answer. Minimum 3.5 required to pass.</li>
                 </ul>
+                <p class="sexplain">Cumulative across all six modules (slides only). The long-answer asks you to weigh
+                  the advantages and disadvantages of methodological techniques and to identify every methodological
+                  flaw in a given study — the course's core skill in one question. You must score at least
+                  <b>3.5/10</b> here to pass, regardless of your weighted average.</p>
                 <div class="tags">
                   <span class="tag milestone">Final exam (25%)</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section class="demo anchor-offset" id="glossary">
+        <h2>Key concepts — glossary</h2>
+        <p class="cap">The recurring vocabulary of the course, in plain terms. These are the terms most likely to
+          appear on the quizzes and exams.</p>
+        <dl class="glossary">
+          <dt>Hypothesis</dt>
+          <dd>A specific, falsifiable prediction derived from a theory, stated so that evidence could prove it wrong.</dd>
+
+          <dt>Theory</dt>
+          <dd>A broad, organised explanation of how and why phenomena occur, from which hypotheses are derived and tested.</dd>
+
+          <dt>Operational definition</dt>
+          <dd>A definition of a construct in terms of the exact operations used to measure or manipulate it (e.g. "anxiety = score on the STAI scale").</dd>
+
+          <dt>Independent variable (IV)</dt>
+          <dd>The variable the researcher manipulates or selects, hypothesised to be the cause.</dd>
+
+          <dt>Dependent variable (DV)</dt>
+          <dd>The outcome that is measured, hypothesised to be affected by the IV.</dd>
+
+          <dt>Confound</dt>
+          <dd>An extraneous variable that varies systematically with the IV, providing a rival explanation for the result.</dd>
+
+          <dt>Random assignment</dt>
+          <dd>Allocating participants to conditions by chance so groups are equivalent on average — the basis of causal inference.</dd>
+
+          <dt>Random sampling</dt>
+          <dd>Selecting participants from a population by chance so the sample is representative — the basis of generalisability.</dd>
+
+          <dt>Control group</dt>
+          <dd>A comparison condition that does not receive the treatment, providing a baseline against which effects are judged.</dd>
+
+          <dt>Reliability</dt>
+          <dd>The consistency of a measure — does it give the same result on repetition? Necessary but not sufficient for validity.</dd>
+
+          <dt>Validity</dt>
+          <dd>Whether a study or measure actually captures what it claims (construct, internal, external, statistical-conclusion).</dd>
+
+          <dt>Internal validity</dt>
+          <dd>The degree to which a study supports a causal claim, free of confounds.</dd>
+
+          <dt>External validity</dt>
+          <dd>The degree to which findings generalise beyond the specific sample, setting and time.</dd>
+
+          <dt>Correlation</dt>
+          <dd>A statistical association between two variables, ranging from −1 to +1; it does not, by itself, imply causation.</dd>
+
+          <dt>Third-variable problem</dt>
+          <dd>When an unmeasured variable causes two others to correlate, creating a spurious association.</dd>
+
+          <dt>Type I error (α)</dt>
+          <dd>A false positive — concluding there is an effect when there is none (rejecting a true null hypothesis).</dd>
+
+          <dt>Type II error (β)</dt>
+          <dd>A false negative — missing a real effect (failing to reject a false null hypothesis).</dd>
+
+          <dt>Statistical power</dt>
+          <dd>The probability of detecting a true effect, equal to 1 − β; raised by larger samples and effect sizes.</dd>
+
+          <dt>Replication</dt>
+          <dd>Repeating a study to verify that a finding is reliable and not a fluke or fraud.</dd>
+
+          <dt>Factorial design</dt>
+          <dd>An experiment crossing two or more factors so every combination of their levels is tested (e.g. 2×2).</dd>
+
+          <dt>Main effect vs. interaction</dt>
+          <dd>A main effect is one factor's overall effect; an interaction is when one factor's effect depends on another's level.</dd>
+
+          <dt>Quasi-experiment</dt>
+          <dd>A design that compares conditions without random assignment, trading internal validity for feasibility.</dd>
+
+          <dt>Operationalisation &amp; double-blind</dt>
+          <dd>A double-blind procedure keeps both participants and experimenters unaware of condition, removing expectancy bias.</dd>
+
+          <dt>Meta-analysis</dt>
+          <dd>A quantitative synthesis that pools effect sizes across many studies to estimate a more precise overall effect.</dd>
+
+          <dt>Demand characteristics</dt>
+          <dd>Cues that lead participants to guess the study's purpose and alter their behaviour accordingly.</dd>
+
+          <dt>Triangulation</dt>
+          <dd>Using multiple methods, sources or measures to cross-check a finding and strengthen confidence in it.</dd>
+        </dl>
+      </section>
+
+      <!-- ANNOTATED BIBLIOGRAPHY -->
+      <section class="demo anchor-offset" id="bibliography">
+        <h2>Annotated readings &amp; bibliography</h2>
+        <p class="cap">Core textbook chapters and supplementary readings, one line each, with the sessions they
+          support. The course textbook is referenced by chapter; supplementary articles are provided via Blackboard.</p>
+        <div class="biblio">
+          <div class="ref"><b>Ch.1 — Introduction to Scientific Thinking</b> (pg. 3–19). What distinguishes scientific from everyday knowing; the empirical, self-correcting stance. <span class="where">→ Session 5</span></div>
+          <div class="ref"><b>Ch.1 — Distinguishing Science from Pseudoscience</b> (pg. 20–27). Demarcation criteria: falsifiability and openness to disconfirmation. <span class="where">→ Session 6</span></div>
+          <div class="ref"><b>Ch.2 — Generating Testable Ideas</b> (pg. 27–34). Turning a vague question into a falsifiable, operationalised hypothesis. <span class="where">→ Session 5</span></div>
+          <div class="ref"><b>Ch.3 — Research Ethics</b> (pg. 53–80). Informed consent, deception, debriefing, IRBs, and human/animal welfare. <span class="where">→ Session 22</span></div>
+          <div class="ref"><b>Ch.4 — Identifying Scientific Variables</b> (pg. 83–88). Constructs, variables, and how to operationalise them. <span class="where">→ Session 7</span></div>
+          <div class="ref"><b>Ch.4 — Reliability &amp; Validity of a Measurement</b> (pg. 93–98). Consistency vs. accuracy and how they relate. <span class="where">→ Session 6</span></div>
+          <div class="ref"><b>Ch.4 — Ethics in Focus: Replication as a Gauge for Fraud?</b> (pg. 103). Replication as a safeguard against fabricated results. <span class="where">→ Session 6</span></div>
+          <div class="ref"><b>Ch.5 — Sampling from Populations</b> (pg. 113–129). Probability vs. non-probability sampling and representativeness. <span class="where">→ Session 7</span></div>
+          <div class="ref"><b>Ch.6 — Choosing a Research Design</b> (pg. 139–146). Matching design to question and constraints. <span class="where">→ Session 8</span></div>
+          <div class="ref"><b>Ch.8 — Correlational Designs</b> (pg. 217–227). Computing/interpreting correlations and the limits on causal claims. <span class="where">→ Session 9</span></div>
+          <div class="ref"><b>Ch.9 — Single-Case Experimental Designs</b> (pg. 256–272). Establishing causality with one or few participants. <span class="where">→ Sessions 10–11</span></div>
+          <div class="ref"><b>Ch.10 — Between-Subjects Experimental Designs</b> (pg. 273–282). Independent-groups logic. <span class="where">→ Session 15</span></div>
+          <div class="ref"><b>Ch.10 — Mixed Participants Experimental Designs</b> (pg. 273–282). Combining within- and between-subjects factors. <span class="where">→ Session 17</span></div>
+          <div class="ref"><b>Ch.10 — General Instructions for Conducting a Factorial ANOVA</b> (pg. 356–364). Step-by-step running and reporting. <span class="where">→ Session 16</span></div>
+          <div class="ref"><b>Ch.11 — Quasi-Experimental Designs</b> (pg. 240–250). Nonequivalent-groups and time-series designs. <span class="where">→ Session 20</span></div>
+          <div class="ref"><b>Ch.11 — Comparing Between-/Within-Subjects Designs</b> (pg. 328–334). The power-vs-carryover trade-off. <span class="where">→ Session 18</span></div>
+          <div class="ref"><b>Ch.12 — Factorial Experimental Designs</b> (pg. 335–346). Structure and notation of multi-factor experiments. <span class="where">→ Session 12</span></div>
+          <div class="ref"><b>Ch.12 — Main Effects and Interactions</b> (pg. 342–355). Reading main effects vs. interactions on plots. <span class="where">→ Sessions 12–13</span></div>
+          <div class="ref"><b>Ch.13 — Descriptive Statistics: Why Summarize Data?</b> (pg. 368–378). Central tendency and variability. <span class="where">→ Session 8</span></div>
+          <div class="ref"><b>Ch.14 — Types of Error and Power</b> (pg. 401–402). Type I/II error and statistical power. <span class="where">→ Session 6</span></div>
+          <div class="ref"><b>Ch.15 — Communicating Research / APA Sample Manuscript</b> (pg. 425–433, 447–503). Writing up and presenting results; annotated model paper. <span class="where">→ Session 27</span></div>
+          <div class="ref"><b>Tversky &amp; Kahneman — Judgment under Uncertainty</b> (Blackboard). Heuristics behind systematic judgment error. <span class="where">→ Session 2</span></div>
+          <div class="ref"><b>From the Fundamental Attribution Error to the truly FAE</b> (Blackboard). How observers discount situational forces. <span class="where">→ Session 3</span></div>
+          <div class="ref"><b>Self-esteem &amp; self-serving bias in reactions to positive/negative events</b> (Blackboard). Self-esteem as a moderator of attribution. <span class="where">→ Session 4</span></div>
+          <div class="ref"><b>Cross-cultural examination of the false-consensus effect</b> (Blackboard). Whether the bias generalises across cultures. <span class="where">→ Session 4</span></div>
+          <div class="ref"><b>Quasi-Experimental Designs &amp; Applied Research</b> (Blackboard). Bridges quasi-experimental method with applied problems. <span class="where">→ Session 21</span></div>
+          <div class="ref"><b>Should we trust web-based studies?</b> (Blackboard). Data quality and validity of online collection. <span class="where">→ Session 22</span></div>
+          <div class="ref"><b>Ethics of CIA &amp; military contracting by psychiatrists/psychologists</b> (Blackboard). A hard case on dual-use ethics. <span class="where">→ Session 22</span></div>
+          <div class="ref"><b>Scientific rewards &amp; conflicts of ethical choices in human research</b> (Blackboard). When incentives collide with ethics. <span class="where">→ Session 22</span></div>
+          <div class="ref"><b>Writing interview protocol &amp; conducting interviews</b> (Blackboard). Practical how-to for first-time interviewers. <span class="where">→ Session 23</span></div>
+          <div class="ref"><b>Focus groups &amp; surveys as complementary methods: a case example</b> (Blackboard). How the two methods triangulate. <span class="where">→ Session 24</span></div>
+          <div class="ref"><b>Revisiting field experimentation: field notes for the future</b> (Blackboard). Observing and note-taking in the field. <span class="where">→ Session 26</span></div>
         </div>
       </section>
     </main>
