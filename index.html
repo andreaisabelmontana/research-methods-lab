@@ -37,6 +37,7 @@
         <a href="#phack">p-hacking</a>
         <a href="#likert">survey bias</a>
         <a href="#dart">reliability</a>
+        <a href="#factorial">factorial</a>
       </nav>
     </header>
 
@@ -270,6 +271,32 @@
             <div class="readout"><span>bias (off-center)</span><strong id="d-bias" class="mono">—</strong></div>
             <div class="readout"><span>verdict</span><strong id="d-verdict" class="mono big">—</strong></div>
             <button id="d-draw" class="btn">re-throw</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. 2×2 FACTORIAL — Module 4: factorial designs, main effects & interactions -->
+      <section class="demo" id="factorial">
+        <h2>11. 2×2 factorial — main effects &amp; interaction</h2>
+        <p class="cap">A $2\times2$ design crosses two factors. Here Factor A = <em>Training</em> (none / yes) and
+          Factor B = <em>Experience</em> (novice / expert); the outcome is a score $0$–$100$. Set the four cell means
+          and read the interaction plot: <strong>parallel lines ⇒ no interaction</strong> (the two factors just add up),
+          <strong>non-parallel ⇒ interaction</strong> (one factor's effect depends on the other). Main effect of A
+          $=\overline{A_2}-\overline{A_1}$, and the interaction $=(A_2B_2-A_2B_1)-(A_1B_2-A_1B_1)$.</p>
+        <div class="row">
+          <div class="canvas-wrap"><canvas id="cv-factorial" width="600" height="320"></canvas></div>
+          <div class="ctrls">
+            <label>A1·B1 — none · novice <span class="mono" id="fa-11v">40</span>
+              <input id="fa-11" type="range" min="0" max="100" step="1" value="40"/></label>
+            <label>A1·B2 — none · expert <span class="mono" id="fa-12v">60</span>
+              <input id="fa-12" type="range" min="0" max="100" step="1" value="60"/></label>
+            <label>A2·B1 — yes · novice <span class="mono" id="fa-21v">55</span>
+              <input id="fa-21" type="range" min="0" max="100" step="1" value="55"/></label>
+            <label>A2·B2 — yes · expert <span class="mono" id="fa-22v">75</span>
+              <input id="fa-22" type="range" min="0" max="100" step="1" value="75"/></label>
+            <div class="readout"><span>main effect A (training)</span><strong id="fa-ma" class="mono">—</strong></div>
+            <div class="readout"><span>main effect B (experience)</span><strong id="fa-mb" class="mono">—</strong></div>
+            <div class="readout"><span>interaction A×B</span><strong id="fa-int" class="mono big">—</strong></div>
           </div>
         </div>
       </section>

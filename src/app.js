@@ -11,6 +11,8 @@
 // wrapped against degenerate input. A resize listener re-runs draw().
 // ============================================================
 
+import { mainEffectA, mainEffectB, interaction } from './factorial.js';
+
 // ---------- helpers ------------------------------------------------------
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 function n(id, fallback) {
@@ -708,6 +710,92 @@ const Z = { '90': 1.645, '95': 1.96, '99': 2.576 };
   }
   $('d-draw').addEventListener('click', () => { resample(); draw(); });
   ['d-r', 'd-v', 'd-n'].forEach(id => $(id).addEventListener('input', () => { resample(); draw(); }));
+  window.addEventListener('resize', draw);
+  draw();
+})();
+
+// ============================================================
+// 11. 2×2 FACTORIAL — MAIN EFFECTS & INTERACTION
+// ============================================================
+(function factorial() {
+  const cv = $('cv-factorial'); if (!cv) return;
+  // Factor A (rows) = Training none(A1)/yes(A2); Factor B (cols) = Experience
+  // novice(B1)/expert(B2). Pure effect maths lives in src/factorial.js.
+  const cells = () => ({
+    a1b1: clamp(n('fa-11', 40), 0, 100),
+    a1b2: clamp(n('fa-12', 60), 0, 100),
+    a2b1: clamp(n('fa-21', 55), 0, 100),
+    a2b2: clamp(n('fa-22', 75), 0, 100),
+  });
+  function draw() {
+    const { ctx, w, h } = fitCanvas(cv);
+    ctx.clearRect(0, 0, w, h);
+    const c = cells();
+    setText('fa-11v', Math.round(c.a1b1));
+    setText('fa-12v', Math.round(c.a1b2));
+    setText('fa-21v', Math.round(c.a2b1));
+    setText('fa-22v', Math.round(c.a2b2));
+
+    const ma = mainEffectA(c.a1b1, c.a1b2, c.a2b1, c.a2b2);
+    const mb = mainEffectB(c.a1b1, c.a1b2, c.a2b1, c.a2b2);
+    const ab = interaction(c.a1b1, c.a1b2, c.a2b1, c.a2b2);
+
+    // interaction plot: x = Factor A levels (A1, A2); two lines for B1, B2.
+    const padL = 46, padR = 96, padT = 24, padB = 40;
+    const gw = w - padL - padR, gh = h - padT - padB;
+    const xA1 = padL + gw * 0.22, xA2 = padL + gw * 0.78;
+    const Y = v => padT + (1 - clamp(v, 0, 100) / 100) * gh;
+
+    // axes + horizontal gridlines (0..100)
+    ctx.strokeStyle = RULE; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padL, padT); ctx.lineTo(padL, padT + gh); ctx.lineTo(padL + gw, padT + gh); ctx.stroke();
+    ctx.fillStyle = MUTED; ctx.font = '10px JetBrains Mono, monospace'; ctx.textAlign = 'right';
+    for (let v = 0; v <= 100; v += 25) {
+      const y = Y(v);
+      ctx.strokeStyle = RULE; ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL + gw, y); ctx.stroke();
+      ctx.fillText('' + v, padL - 5, y + 3);
+    }
+    // x-axis level ticks
+    ctx.textAlign = 'center'; ctx.fillStyle = INK_S; ctx.font = '600 11px Inter, sans-serif';
+    ctx.fillText('A1 · no training', xA1, padT + gh + 16);
+    ctx.fillText('A2 · training', xA2, padT + gh + 16);
+    ctx.fillStyle = MUTED; ctx.font = '11px Inter, sans-serif';
+    ctx.fillText('Factor A (Training)  →', padL + gw / 2, h - 6);
+    ctx.save(); ctx.translate(13, padT + gh / 2); ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = 'center'; ctx.fillText('outcome score', 0, 0); ctx.restore();
+
+    // one line per Factor B level
+    const series = [
+      { lab: 'B1 · novice', col: INK_S, y1: c.a1b1, y2: c.a2b1 },
+      { lab: 'B2 · expert', col: ACCENT, y1: c.a1b2, y2: c.a2b2 },
+    ];
+    series.forEach(s => {
+      ctx.strokeStyle = s.col; ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(xA1, Y(s.y1)); ctx.lineTo(xA2, Y(s.y2)); ctx.stroke();
+      [[xA1, s.y1], [xA2, s.y2]].forEach(([px, vv]) => {
+        ctx.beginPath(); ctx.arc(px, Y(vv), 5, 0, Math.PI * 2);
+        ctx.fillStyle = s.col; ctx.fill();
+        ctx.lineWidth = 1.4; ctx.strokeStyle = '#fff'; ctx.stroke();
+      });
+      // right-edge series label by the A2 endpoint
+      ctx.fillStyle = s.col; ctx.font = '600 11px Inter, sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText(s.lab, xA2 + 9, Y(s.y2) + 3);
+    });
+
+    // parallel-ness note
+    const parallel = Math.abs(ab) < 0.5;
+    ctx.textAlign = 'left'; ctx.font = '11px Inter, sans-serif';
+    ctx.fillStyle = parallel ? GOOD : BAD;
+    ctx.fillText(parallel ? 'lines parallel → no interaction (additive)' : 'lines not parallel → interaction present',
+      padL + 2, padT + 12 < 14 ? padT + 14 : padT - 8 > 10 ? padT - 8 : padT + 12);
+
+    const sign = x => (x >= 0 ? '+' : '') + x.toFixed(1);
+    setText('fa-ma', sign(ma));
+    setText('fa-mb', sign(mb));
+    setText('fa-int', sign(ab) + (parallel ? '  (≈0 → additive)' : ''));
+    $('fa-int').style.color = parallel ? GOOD : BAD;
+  }
+  ['fa-11', 'fa-12', 'fa-21', 'fa-22'].forEach(id => $(id).addEventListener('input', draw));
   window.addEventListener('resize', draw);
   draw();
 })();

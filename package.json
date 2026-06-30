@@ -1,0 +1,11 @@
+{
+  "name": "research-methods-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Visual demos for IE BCSAI research methods: sampling, experiments, correlation, surveys, measurement.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
