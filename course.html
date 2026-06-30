@@ -13,6 +13,24 @@
 
     <link rel="stylesheet" href="./style.css" />
 
+    <!-- KaTeX (math typesetting) — used only inside the "Worked methods & analyses" section -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (window.renderMathInElement) {
+          renderMathInElement(document.getElementById("worked"), {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "$", right: "$", display: false }
+            ],
+            throwOnError: false
+          });
+        }
+      });
+    </script>
+
     <style>
       /* course.html — extends the *-lab design language, reusing :root tokens */
       .lede { color: var(--ink-soft); font-size: 0.95rem; max-width: 70ch; margin: 0 0 0.85rem; }
@@ -145,6 +163,53 @@
         font-size: 0.81rem; color: var(--ink-soft);
       }
       .callout b { color: #B45309; }
+
+      /* worked methods & analyses — reuses existing tokens; KaTeX-aware */
+      #worked .wm { margin-top: 1.3rem; }
+      #worked .wm:first-of-type { margin-top: 0.5rem; }
+      #worked .wm-head {
+        display: flex; align-items: baseline; gap: 0.55rem;
+        padding-bottom: 0.4rem; margin-bottom: 0.55rem;
+        border-bottom: 1px solid var(--rule-h);
+      }
+      #worked .wm-head .wnum {
+        font-family: var(--font-mono); font-weight: 600; font-size: 0.72rem;
+        color: #fff; background: var(--accent); border-radius: 4px; padding: 0.12em 0.5em;
+      }
+      #worked .wm-head h3 { font-size: 0.98rem; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em; }
+      #worked .wm-head .wtag { color: var(--muted); font-size: 0.78rem; }
+      #worked .wm p { font-size: 0.86rem; color: var(--ink-soft); margin: 0.35rem 0 0; max-width: 76ch; }
+      #worked .wm p b { color: var(--ink); }
+      #worked .wm ol, #worked .wm ul.steps { margin: 0.45rem 0 0; padding-left: 1.2rem; color: var(--ink-soft); font-size: 0.85rem; }
+      #worked .wm ol li, #worked .wm ul.steps li { margin: 0.3rem 0; }
+      #worked .wsub { font-size: 0.78rem; font-weight: 700; color: var(--ink); margin: 0.65rem 0 0.1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+      #worked .skey {
+        margin: 0.5rem 0 0; padding: 0.4rem 0.6rem;
+        border-left: 2px solid var(--accent); background: var(--accent-soft);
+        border-radius: 0 4px 4px 0; font-size: 0.83rem; color: var(--ink-soft);
+      }
+      #worked .skey b { color: var(--ink); }
+      #worked .wnote {
+        margin: 0.5rem 0 0; padding: 0.4rem 0.6rem;
+        border-left: 2px solid var(--gold); background: rgba(180,83,9,0.07);
+        border-radius: 0 4px 4px 0; font-size: 0.81rem; color: var(--ink-soft);
+      }
+      #worked .wnote b { color: var(--gold); }
+      /* compact data table for the worked examples */
+      #worked table.wdata { border-collapse: collapse; margin: 0.5rem 0 0; font-size: 0.82rem; width: auto; }
+      #worked table.wdata caption { caption-side: top; text-align: left; color: var(--muted); font-size: 0.74rem; margin-bottom: 0.25rem; font-style: italic; }
+      #worked table.wdata th, #worked table.wdata td {
+        border: 1px solid var(--rule); padding: 0.28rem 0.7rem; text-align: right; color: var(--ink-soft);
+      }
+      #worked table.wdata th { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+      #worked table.wdata th:first-child, #worked table.wdata td:first-child { text-align: left; }
+      #worked .katex { font-size: 1.0em; }
+      #worked .apa {
+        margin: 0.5rem 0 0; padding: 0.45rem 0.65rem;
+        background: var(--bg); border: 1px solid var(--rule); border-radius: 4px;
+        font-size: 0.83rem; color: var(--ink);
+      }
+      #worked .apa .alabel { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); display: block; margin-bottom: 0.15rem; }
     </style>
   </head>
   <body>
@@ -161,6 +226,7 @@
         <a href="#methodology">methodology</a>
         <a href="#assessment">assessment</a>
         <a href="#program">program</a>
+        <a href="#worked">worked methods</a>
         <a href="#glossary">glossary</a>
         <a href="#bibliography">readings</a>
         <a href="./SYLLABUS.pdf" target="_blank">syllabus PDF</a>
@@ -1195,6 +1261,256 @@
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- WORKED METHODS & ANALYSES -->
+      <section class="demo anchor-offset" id="worked">
+        <h2>Worked methods &amp; analyses</h2>
+        <p class="cap">A depth layer that goes beyond the session outline: fully worked, step-by-step methodological
+          and statistical analyses of the kind the labs and the long-answer exam question demand. Each item runs the
+          full logic — not just the formula. Datasets and studies marked <em>illustrative</em> are invented to make
+          the procedure concrete; the methodology and arithmetic, however, are real and can be reproduced by hand.</p>
+
+        <!-- 1 · OPERATIONALIZATION -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W1</span><h3>Operationalizing a construct: "academic stress"</h3>
+            <span class="wtag">construct → measure → measurement level → reliability + validity</span></div>
+          <p><b>The problem.</b> "Academic stress" is a <b>construct</b> — a hypothetical, unobservable attribute. You
+            cannot put it on a balance. Before you can study it you must turn it into something countable without
+            losing what you meant by it.</p>
+          <div class="wsub">Step 1 — conceptual definition</div>
+          <p>State, in theory-laden words, what the construct <em>is</em>: <em>the subjective sense of pressure,
+            worry, and overload a student experiences in response to academic demands (coursework, deadlines,
+            exams).</em> This is the target the measure must capture.</p>
+          <div class="wsub">Step 2 — operational definition</div>
+          <p>Specify the exact operations that yield a number. Here: <em>the student's mean response to the 10-item
+            Perceived Academic Stress scale, each item rated 1 ("never") to 5 ("always"), averaged into a single
+            score from 1 to 5.</em> A different lab might operationalise the <em>same</em> construct as salivary
+            cortisol (µg/dL) or as resting heart rate (bpm) — three operational definitions of one construct, which
+            is exactly why construct validity (Step 4) matters.</p>
+          <div class="wsub">Step 3 — level of measurement</div>
+          <p>The averaged 1–5 scale is treated as <b>interval</b>: ordered, with (assumed) equal spacing between
+            consecutive points, but no true zero — a score of 0 stress is not defined, and a 4 is not "twice" the
+            stress of a 2. This licenses means, SDs, t-tests and correlations. Contrast the four levels:</p>
+          <ul class="steps">
+            <li><b>Nominal</b> — unordered categories (degree programme: CS / AI / Business). Only counts and modes.</li>
+            <li><b>Ordinal</b> — ordered ranks with unequal gaps (class rank 1st/2nd/3rd; a Likert <em>single</em> item, strictly). Medians, not means.</li>
+            <li><b>Interval</b> — equal intervals, arbitrary zero (the averaged stress score; temperature in °C). Means, SDs, Pearson <em>r</em>.</li>
+            <li><b>Ratio</b> — equal intervals <em>and</em> a true zero (cortisol µg/dL, hours studied). Ratios are meaningful: 4 h is twice 2 h.</li>
+          </ul>
+          <div class="wsub">Step 4 — one reliability check, one validity check</div>
+          <p><b>Reliability (consistency):</b> compute <b>internal consistency</b> across the 10 items with Cronbach's
+            $\alpha$. A value of, say, $\alpha = 0.86$ (rule of thumb $\alpha \ge 0.70$) says the items hang together
+            — they measure one thing consistently. <b>Validity (accuracy):</b> check <b>convergent construct
+            validity</b> by correlating the scale with a separate established stress measure; a strong positive
+            $r$ (e.g. $r = 0.65$ with the cortisol reading) is evidence the scale captures the intended construct.</p>
+          <p class="skey"><b>Key idea:</b> reliability is necessary but not sufficient for validity — a bathroom
+            scale stuck 3 kg high is perfectly <em>reliable</em> (same wrong number every time) yet <em>invalid</em>.
+            You operationalise first, then must defend both consistency and accuracy.</p>
+        </div>
+
+        <!-- 2 · INDEPENDENT-SAMPLES t-TEST -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W2</span><h3>Independent-samples <em>t</em>-test, interpreted end to end</h3>
+            <span class="wtag">two means → SE → t → df → p → effect size → APA</span></div>
+          <p><b>Illustrative study.</b> Does a study-skills workshop raise exam scores? Two independent groups, scores
+            out of 100.</p>
+          <table class="wdata">
+            <caption>Illustrative data — two independent groups</caption>
+            <tr><th>Group</th><th>n</th><th>Mean ($\bar x$)</th><th>SD (s)</th></tr>
+            <tr><td>Workshop</td><td>30</td><td>72</td><td>8</td></tr>
+            <tr><td>Control</td><td>30</td><td>66</td><td>9</td></tr>
+          </table>
+          <div class="wsub">Step 1 — the standard error of the difference</div>
+          <p>With roughly equal SDs, pool the variances, then convert to the SE of the difference between means:</p>
+          <p>$s_p^2 = \dfrac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} = \dfrac{29(64) + 29(81)}{58} = \dfrac{4205}{58} = 72.5$</p>
+          <p>$SE_{\bar x_1 - \bar x_2} = \sqrt{\,s_p^2\!\left(\tfrac{1}{n_1}+\tfrac{1}{n_2}\right)} = \sqrt{72.5\left(\tfrac{1}{30}+\tfrac{1}{30}\right)} = \sqrt{4.833} = 2.20$</p>
+          <div class="wsub">Step 2 — the t statistic and its logic</div>
+          <p>$t = \dfrac{\bar x_1 - \bar x_2}{SE} = \dfrac{72 - 66}{2.20} = 2.73$. The numerator is the signal (how far
+            apart the groups are); the denominator is the noise (how much two samples this size would differ by chance
+            even if the populations were identical). A $t$ of 2.73 means the observed gap is 2.73 standard errors
+            larger than the "nothing's going on" expectation of zero.</p>
+          <div class="wsub">Step 3 — degrees of freedom, significance</div>
+          <p>$df = n_1 + n_2 - 2 = 58$. The two-tailed critical value at $\alpha = .05$ is $\approx 2.00$. Since
+            $2.73 > 2.00$ we reject the null hypothesis $H_0\!: \mu_1 = \mu_2$; the exact $p = .008$, i.e. $p < .01$.
+            Under a true null, a difference this large or larger would arise less than 1 time in 100.</p>
+          <div class="wsub">Step 4 — effect size (because p is not size)</div>
+          <p>$p$ tells you the result is unlikely by chance; it does <em>not</em> tell you how big it is. Cohen's
+            $d$ standardises the gap by the pooled SD $\left(s_p=\sqrt{72.5}=8.52\right)$:
+            $d = \dfrac{\bar x_1 - \bar x_2}{s_p} = \dfrac{6}{8.52} = 0.70$ — a medium-to-large effect (≈0.2 small,
+            0.5 medium, 0.8 large).</p>
+          <div class="apa"><span class="alabel">APA-style results sentence</span>
+            The workshop group ($M = 72$, $SD = 8$) scored significantly higher than the control group
+            ($M = 66$, $SD = 9$), $t(58) = 2.73$, $p = .008$, $d = 0.70$.</div>
+          <p class="wnote"><b>Watch the assumptions:</b> independent observations, approximately normal scores (or
+            $n$ large enough for the CLT), and roughly equal variances. If variances differed sharply, you would
+            report Welch's $t$ with adjusted, non-integer $df$ instead.</p>
+        </div>
+
+        <!-- 3 · ONE-WAY ANOVA -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W3</span><h3>One-way ANOVA: partitioning variance into the F ratio</h3>
+            <span class="wtag">between vs. within variance → F → what F does and does not tell you</span></div>
+          <p><b>Illustrative study.</b> Three teaching methods (n = 5 each), outcome = quiz score. Why not three
+            <em>t</em>-tests? Each test at $\alpha = .05$ carries a 5% false-positive risk; three of them inflate the
+            family-wise error toward $\approx 14\%$. ANOVA asks one omnibus question at a single $\alpha$ instead.</p>
+          <table class="wdata">
+            <caption>Illustrative data — group means (each n = 5), grand mean = 6.67</caption>
+            <tr><th>Method A</th><th>Method B</th><th>Method C</th></tr>
+            <tr><td>7.0</td><td>4.4</td><td>8.6</td></tr>
+          </table>
+          <div class="wsub">Step 1 — two sources of variance</div>
+          <p><b>Between-groups</b> variance measures how far the group means spread from the grand mean — driven by the
+            treatment <em>plus</em> error. <b>Within-groups</b> variance measures the scatter of scores <em>around
+            their own group mean</em> — pure error (individual differences, noise). If the treatment does nothing,
+            these two estimate the same error and their ratio is about 1.</p>
+          <p>$SS_{between} = \sum_j n_j(\bar x_j - \bar x_{grand})^2 = 44.93,\quad df_{between} = k-1 = 2$</p>
+          <p>$SS_{within} = \sum_j \sum_i (x_{ij} - \bar x_j)^2 = 20.40,\quad df_{within} = N-k = 12$</p>
+          <div class="wsub">Step 2 — mean squares and the F ratio</div>
+          <p>$MS_{between} = \dfrac{SS_{between}}{df_{between}} = \dfrac{44.93}{2} = 22.47,\qquad
+            MS_{within} = \dfrac{SS_{within}}{df_{within}} = \dfrac{20.40}{12} = 1.70$</p>
+          <p>$F = \dfrac{MS_{between}}{MS_{within}} = \dfrac{22.47}{1.70} = 13.22$</p>
+          <div class="wsub">Step 3 — decision and its limit</div>
+          <p>With $df = (2, 12)$ the critical $F$ at $\alpha = .05$ is $3.89$. Since $13.22 > 3.89$ we reject
+            $H_0\!: \mu_A = \mu_B = \mu_C$ (exact $p < .001$): the systematic differences between methods are far
+            larger than chance scatter.</p>
+          <p class="skey"><b>What a significant F does NOT tell you:</b> it says <em>at least one</em> group mean
+            differs — not <em>which</em> ones, nor how many. Method C might beat both others, or only B might lag.
+            To locate the differences you run <b>post-hoc tests</b> (e.g. Tukey's HSD) that compare pairs while
+            controlling the family-wise error rate.</p>
+          <div class="apa"><span class="alabel">APA-style results sentence</span>
+            Teaching method had a significant effect on quiz scores, $F(2, 12) = 13.22$, $p &lt; .001$; Tukey
+            post-hoc comparisons were then used to identify which methods differed.</div>
+        </div>
+
+        <!-- 4 · CORRELATION -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W4</span><h3>Reading a correlation: r, r², and the confound that breaks causation</h3>
+            <span class="wtag">interpret r → variance explained → third variable</span></div>
+          <p><b>Illustrative finding.</b> Across 200 students, daily screen time and reported sleep problems correlate
+            at $r = +0.42$.</p>
+          <div class="wsub">Step 1 — interpret r itself</div>
+          <p>$r$ ranges from $-1$ to $+1$. The <em>sign</em> gives direction (here positive: more screen time goes with
+            more sleep problems); the <em>magnitude</em> gives strength ($\approx 0.1$ weak, $0.3$ moderate, $0.5$
+            strong). So $r = 0.42$ is a moderate positive linear association.</p>
+          <div class="wsub">Step 2 — square it for variance explained</div>
+          <p>$r^2 = 0.42^2 = 0.176$. The <b>coefficient of determination</b> says screen time statistically accounts
+            for <b>17.6%</b> of the variance in sleep problems — and, crucially, leaves <b>82.4% unexplained</b>.
+            A "moderate" correlation explains less than a fifth of the differences between people.</p>
+          <div class="wsub">Step 3 — why this is not causation</div>
+          <p>A correlation is consistent with three causal stories: screen → sleep, sleep → screen (reverse causality),
+            or a <b>third variable</b> driving both. A concrete confound here: <em>anxiety</em>. Anxious students both
+            scroll late to self-soothe (↑ screen time) and lie awake worrying (↑ sleep problems). Anxiety could
+            produce the entire $r = 0.42$ with no causal arrow between screen time and sleep at all — a
+            <b>spurious correlation</b>.</p>
+          <p class="skey"><b>Key idea:</b> only manipulation with random assignment (an experiment) licenses a causal
+            claim. A correlation can <em>suggest</em> a hypothesis and, with statistical control of measured
+            confounds, can <em>weaken</em> rival explanations — but it can never rule out an unmeasured third
+            variable on its own.</p>
+        </div>
+
+        <!-- 5 · SAMPLING, ERROR & POWER -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W5</span><h3>Sampling, error, and statistical power</h3>
+            <span class="wtag">probability vs. non-probability → error vs. bias → α, β, power</span></div>
+          <div class="wsub">Probability vs. non-probability sampling</div>
+          <p>In <b>probability sampling</b> every member of the population has a known, non-zero chance of selection
+            (simple random, stratified, cluster). This is what makes the sample <em>representative</em> and licenses
+            inference to the population. In <b>non-probability sampling</b> (convenience, snowball, quota) selection
+            chances are unknown — fast and cheap, but generalisation is not justified. Surveying only the students who
+            walk past your table is convenience sampling.</p>
+          <div class="wsub">Sampling error vs. bias — a sharp distinction</div>
+          <ul class="steps">
+            <li><b>Sampling error</b> is random: even a perfectly drawn random sample differs from the population
+              by chance. It is <em>unbiased</em> (averages out across samples) and <em>shrinks</em> as $n$ grows
+              — the standard error of the mean is $SE = \dfrac{s}{\sqrt{n}}$.</li>
+            <li><b>Bias</b> is systematic: a flawed method pushes estimates in a consistent direction, and a bigger
+              sample does <em>not</em> fix it. A poll of only landline owners is biased no matter how many you call.</li>
+          </ul>
+          <p class="wnote"><b>The trap:</b> a huge sample buys precision (tiny sampling error) but can be confidently,
+            precisely <em>wrong</em> if the sampling method is biased. Size cures variance, not bias.</p>
+          <div class="wsub">Power and the four interlocking quantities</div>
+          <p>Hypothesis testing has two error types and two correct decisions:</p>
+          <ul class="steps">
+            <li><b>Type I error ($\alpha$)</b> — false positive: rejecting a true null. Conventionally fixed at $\alpha = .05$.</li>
+            <li><b>Type II error ($\beta$)</b> — false negative: missing a real effect.</li>
+            <li><b>Power $= 1 - \beta$</b> — the probability of detecting a real effect when it exists; the field target is $\ge .80$.</li>
+          </ul>
+          <p>Power rises with (1) a larger <b>effect size</b> (bigger signals are easier to see), (2) a larger
+            <b>sample size $n$</b> (which shrinks the SE), and (3) a more lenient <b>$\alpha$</b> (but raising $\alpha$
+            trades fewer Type II errors for more Type I errors). The four — $\alpha$, $\beta$/power, effect size,
+            and $n$ — are mathematically linked: fix any three and the fourth is determined, which is exactly how an
+            <em>a priori</em> power analysis decides the sample size <em>before</em> data collection.</p>
+          <p class="skey"><b>Key idea:</b> an underpowered study that returns "no significant difference" has <em>not</em>
+            shown there is no effect — absence of evidence is not evidence of absence. It may simply have lacked the
+            power to detect a real one.</p>
+        </div>
+
+        <!-- 6 · STUDY CRITIQUE -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W6</span><h3>Worked study critique: spotting the flaws</h3>
+            <span class="wtag">IV/DV → confound → internal &amp; external validity → fixes</span></div>
+          <p><b>Illustrative study.</b> A company wants to know if a new ergonomic chair boosts productivity. It gives
+            the chair to the morning shift and leaves the afternoon shift on the old chairs, then compares the number
+            of units each shift completes that week. The morning shift produces more, and the company concludes the
+            chair works.</p>
+          <div class="wsub">Identify the variables</div>
+          <ul class="steps">
+            <li><b>IV</b> (manipulated): chair type — new ergonomic vs. old.</li>
+            <li><b>DV</b> (measured): units completed per worker per week.</li>
+          </ul>
+          <div class="wsub">The confound</div>
+          <p>Chair type is perfectly entangled with <b>shift</b>. Morning workers may be fresher, differently
+            supervised, or simply different people from afternoon workers. <em>Shift</em> varies systematically with
+            the IV, so it is a textbook confound — any productivity gap could be caused by the time of day rather than
+            the chair. <b>Fix:</b> <em>randomly assign individual workers</em> within each shift to new vs. old
+            chairs, breaking the chair–shift link.</p>
+          <div class="wsub">Internal-validity threat (causal claim within the study)</div>
+          <p>Because workers were not randomly assigned and the groups were intact shifts, this is a <b>selection</b>
+            threat: the groups may have differed in productivity <em>before</em> any chair was introduced. <b>Fix:</b>
+            random assignment to conditions, plus a baseline (pre-test) productivity measure to confirm the groups
+            started equal.</p>
+          <div class="wsub">External-validity threat (generalisation beyond the study)</div>
+          <p>The result comes from one company, one task, and one week. It may not generalise to other jobs, longer
+            horizons, or other workforces — and a one-week boost could be a <b>novelty effect</b> that fades. <b>Fix:</b>
+            run the study across multiple sites and job types and extend the measurement window to several weeks to see
+            whether the effect persists.</p>
+          <p class="skey"><b>Key idea:</b> internal validity asks "is the causal claim sound <em>here</em>?";
+            external validity asks "does it travel <em>elsewhere</em>?" Random <em>assignment</em> protects the first;
+            representative <em>sampling</em> and replication protect the second.</p>
+        </div>
+
+        <!-- 7 · ETHICS SCENARIO -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W7</span><h3>Research-ethics scenario, analysed</h3>
+            <span class="wtag">informed consent → deception + debriefing → confidentiality → IRB</span></div>
+          <p><b>Illustrative scenario.</b> A researcher wants to study conformity. Participants are told the study is
+            about "visual perception" (not conformity), are seated with confederates who give obviously wrong answers,
+            and the researcher records whether each participant conforms. Names are stored next to the data on a shared
+            laptop, and the study began before any committee saw the protocol.</p>
+          <div class="wsub">Informed consent</div>
+          <p>Participants must <em>voluntarily</em> agree after being told the purpose, procedures, risks, and their
+            right to withdraw at any time without penalty. Here, consent is undermined twice: the true purpose is
+            hidden, and (if any participants were students pressured by course credit) voluntariness is questionable.
+            <b>Requirement:</b> obtain documented consent covering everything that can ethically be disclosed.</p>
+          <div class="wsub">Deception and the duty to debrief</div>
+          <p>The cover story ("visual perception") is <b>deception</b>. Deception can be ethically permissible <em>only
+            when</em> (a) the study cannot be done without it, (b) the risk is no more than minimal, and (c) it is
+            paired with a thorough <b>debriefing</b> afterwards that reveals the true purpose, explains why deception
+            was necessary, and lets participants withdraw their data. The scenario's flaw is not deception per se —
+            it is the absence of a debriefing plan.</p>
+          <div class="wsub">Confidentiality</div>
+          <p>Storing names beside responses on a shared laptop violates <b>confidentiality</b>. <b>Fix:</b> separate
+            identifiers from the data (assign codes), store any linking key separately and encrypted, and report only
+            aggregated, de-identified results.</p>
+          <div class="wsub">IRB / ethics-board review</div>
+          <p>Running the study before review skips the <b>IRB / research-ethics board</b> — the independent body that
+            weighs risks against benefits and must approve the protocol <em>before</em> data collection. <b>Fix:</b>
+            submit and secure approval first; only then recruit.</p>
+          <p class="skey"><b>Key idea:</b> ethics is not a final checkbox but a design constraint. A study can be
+            methodologically elegant and still be impermissible — and an ethics board exists precisely to catch the
+            cases where a researcher's enthusiasm outruns participants' rights.</p>
         </div>
       </section>
 
