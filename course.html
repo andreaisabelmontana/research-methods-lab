@@ -1512,6 +1512,154 @@
             methodologically elegant and still be impermissible — and an ethics board exists precisely to catch the
             cases where a researcher's enthusiasm outruns participants' rights.</p>
         </div>
+
+        <!-- 8 · SAMPLE SIZE / MARGIN OF ERROR -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W8</span><h3>Sample size for a poll: solving the margin-of-error formula</h3>
+            <span class="wtag">margin of error → n for a proportion → why √n governs precision</span></div>
+          <p><b>The problem.</b> You will run a yes/no opinion poll and want a 95% <b>margin of error</b> (MoE) of
+            $\pm 3$ percentage points. How many respondents do you need? This is the quantitative companion to W5 —
+            there we discussed power in words; here we actually solve for $n$.</p>
+          <div class="wsub">Step 1 — the formula and the worst case</div>
+          <p>For a proportion at 95% confidence the required sample size is
+            $n = \dfrac{z^2\,p(1-p)}{E^2}$, where $z = 1.96$ is the 95% critical value, $E$ is the MoE as a decimal,
+            and $p$ is the expected proportion. The term $p(1-p)$ is largest at $p = 0.5$ (where it equals $0.25$), so
+            using $p = 0.5$ gives the <em>most conservative</em> — largest — $n$ and is the standard choice when you
+            have no prior estimate.</p>
+          <div class="wsub">Step 2 — plug in and solve</div>
+          <p>$n = \dfrac{1.96^2 \times 0.5 \times 0.5}{0.03^2} = \dfrac{3.8416 \times 0.25}{0.0009}
+            = \dfrac{0.9604}{0.0009} = 1067.1 \;\Rightarrow\; n = 1068.$</p>
+          <p>Sample size always rounds <b>up</b> (1067.1 → 1068): you cannot poll a fraction of a person, and rounding
+            down would leave the true MoE slightly above $\pm 3$ points. The textbook short-hand figure is
+            $n \approx 1067$.</p>
+          <div class="wsub">Step 3 — interpret the margin of error</div>
+          <p>If the poll comes back at 52% "yes" with this $n$, the 95% interval is $52\% \pm 3\% = [49\%, 55\%]$:
+            were the survey repeated many times, about 95% of such intervals would contain the true population
+            percentage. Note the MoE depends on $n$ and $E$ but <em>not</em> on the population size once the population
+            is large — a national poll and a city poll need roughly the same $n$ for the same precision.</p>
+          <p class="skey"><b>Key idea — precision scales with $\sqrt n$, not $n$.</b> Because $n \propto 1/E^2$, halving
+            the margin of error <em>quadruples</em> the sample: tightening from $\pm 3\%$ to $\pm 1.5\%$ jumps $n$ from
+            1068 to about $4{,}268$. Relaxing to $\pm 5\%$ drops it to $n = \dfrac{0.9604}{0.0025} = 384.2 \to 385$.</p>
+        </div>
+
+        <!-- 9 · PEARSON r FROM RAW DATA -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W9</span><h3>Computing Pearson's r by hand from raw data</h3>
+            <span class="wtag">deviation scores → r → r² → correlation ≠ causation</span></div>
+          <p><b>Illustrative data.</b> W4 <em>interpreted</em> a given $r$; here we <em>compute</em> one from scratch.
+            Five students; $X =$ hours of weekly exercise, $Y =$ a 1–10 wellbeing rating.</p>
+          <table class="wdata">
+            <caption>Illustrative data with deviation scores ($\bar X = 3$, $\bar Y = 5$)</caption>
+            <tr><th>X</th><th>Y</th><th>$x-\bar X$</th><th>$y-\bar Y$</th><th>$(x-\bar X)(y-\bar Y)$</th><th>$(x-\bar X)^2$</th><th>$(y-\bar Y)^2$</th></tr>
+            <tr><td>1</td><td>3</td><td>−2</td><td>−2</td><td>4</td><td>4</td><td>4</td></tr>
+            <tr><td>2</td><td>5</td><td>−1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>3</td><td>4</td><td>0</td><td>−1</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>4</td><td>6</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>5</td><td>7</td><td>2</td><td>2</td><td>4</td><td>4</td><td>4</td></tr>
+            <tr><td><b>Σ</b></td><td></td><td></td><td></td><td><b>9</b></td><td><b>10</b></td><td><b>10</b></td></tr>
+          </table>
+          <div class="wsub">Step 1 — means and deviation sums</div>
+          <p>$\bar X = \tfrac{1+2+3+4+5}{5} = 3,\quad \bar Y = \tfrac{3+5+4+6+7}{5} = 5.$ From the column totals,
+            $S_{xy} = \sum (x-\bar X)(y-\bar Y) = 9,\; S_{xx} = \sum (x-\bar X)^2 = 10,\; S_{yy} = \sum (y-\bar Y)^2 = 10.$</p>
+          <div class="wsub">Step 2 — the correlation and its square</div>
+          <p>$r = \dfrac{S_{xy}}{\sqrt{S_{xx}\,S_{yy}}} = \dfrac{9}{\sqrt{10 \times 10}} = \dfrac{9}{10} = 0.90.$
+            Then $r^2 = 0.90^2 = 0.81$: <b>81% of the variance</b> in wellbeing is statistically accounted for by
+            exercise (19% is left to other causes and noise).</p>
+          <p class="wnote"><b>But not causation.</b> $r = 0.90$ is strong and positive, yet the direction is unsettled
+            (happier students may simply choose to exercise more) and a third variable — say baseline physical health —
+            could drive both. As in W4, only an experiment with random assignment would license "exercise <em>causes</em>
+            higher wellbeing."</p>
+          <p class="skey"><b>Answer:</b> $r = 0.90$ (strong, positive); $r^2 = 0.81$ (81% of variance explained); still
+            non-causal.</p>
+        </div>
+
+        <!-- 10 · 2x2 WITH NO INTERACTION -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W10</span><h3>A 2×2 factorial with <em>no</em> interaction (parallel lines)</h3>
+            <span class="wtag">two main effects → additivity → contrast with the interaction example</span></div>
+          <p><b>The problem.</b> The Caffeine×Sleep example in Module 3 above showed an <em>interaction</em> (caffeine
+            helped the sleep-deprived far more than the rested — non-parallel lines). This is the deliberate
+            <b>contrast</b>: a clean 2×2 where the two factors simply add up. Cross <em>Training</em> (none / completed)
+            with <em>Experience</em> (novice / expert), outcome = task score 0–100.</p>
+          <table class="wdata">
+            <caption>Cell means (illustrative task scores)</caption>
+            <tr><th></th><th>No training</th><th>Training</th><th>Row mean</th></tr>
+            <tr><td><b>Novice</b></td><td>40</td><td>55</td><td>47.5</td></tr>
+            <tr><td><b>Expert</b></td><td>60</td><td>75</td><td>67.5</td></tr>
+            <tr><td><b>Col mean</b></td><td>50</td><td>65</td><td></td></tr>
+          </table>
+          <div class="wsub">Step 1 — the two main effects</div>
+          <ul class="steps">
+            <li><b>Main effect of Training</b> = (training col mean) − (no-training col mean) $= 65 - 50 = +15$ points,
+              averaged over experience.</li>
+            <li><b>Main effect of Experience</b> = (expert row mean) − (novice row mean) $= 67.5 - 47.5 = +20$ points,
+              averaged over training.</li>
+          </ul>
+          <div class="wsub">Step 2 — show there is no interaction</div>
+          <p>Training raises novices by $55 - 40 = +15$ and experts by $75 - 60 = +15$. The effect of one factor is the
+            <em>same</em> at both levels of the other ($15 = 15$), so the interaction is <b>zero</b>. Equivalently, every
+            cell equals a baseline plus the two main effects: $40 + 20\,(\text{expert}) + 15\,(\text{training}) = 75$,
+            exactly the expert-trained cell. That additivity <em>is</em> "no interaction."</p>
+          <p class="skey"><b>Read the plot:</b> the novice line (40→55) and the expert line (60→75) both climb by 15,
+            so they are <b>parallel</b> — the visual signature of main effects only. Non-parallel lines (as in the
+            Caffeine×Sleep case) signal an interaction.</p>
+          <div class="apa"><span class="alabel">APA-style results sentence</span>
+            There were significant main effects of training, and of experience, on task score, but no
+            training × experience interaction, $F_{\text{interaction}}(1, df) \approx 0$, $p = \text{n.s.}$</div>
+        </div>
+
+        <!-- 11 · MULTIPLE COMPARISONS / BONFERRONI -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">W11</span><h3>Multiple comparisons: family-wise error and the Bonferroni fix</h3>
+            <span class="wtag">why 20 tests inflate α → FWER → Bonferroni α/m</span></div>
+          <p><b>The problem.</b> W3 noted in passing that three $t$-tests inflate the error rate to ≈14%. Here we
+            derive the general rule and apply it to a realistic case: an analyst runs <b>20 independent significance
+            tests</b>, each at $\alpha = .05$, on data where <em>no</em> effect truly exists. What is the chance of at
+            least one false positive, and how do we control it?</p>
+          <div class="wsub">Step 1 — the family-wise error rate</div>
+          <p>For one test, $P(\text{no false positive}) = 1 - \alpha = 0.95$. For $m$ <em>independent</em> tests the
+            probability of no false positive anywhere is $(1-\alpha)^m$, so the <b>family-wise error rate</b> is
+            $\text{FWER} = 1 - (1-\alpha)^m.$</p>
+          <p>With $m = 20$, $\alpha = .05$: $\;\text{FWER} = 1 - 0.95^{20} = 1 - 0.3585 = 0.6415.$ Running 20 tests at
+            the usual threshold gives a <b>≈64%</b> chance of "discovering" at least one effect that is pure noise —
+            the engine behind p-hacking.</p>
+          <div class="wsub">Step 2 — the Bonferroni correction</div>
+          <p>To hold the overall risk near $\alpha$, test each comparison at the stricter level
+            $\alpha' = \dfrac{\alpha}{m} = \dfrac{0.05}{20} = 0.0025.$ Then the family-wise risk falls back into line:
+            $1 - (1 - 0.0025)^{20} \approx 0.0488 \le 0.05.$ Only $p$-values below $.0025$ count as significant.</p>
+          <p class="wnote"><b>Sanity-check the smaller case:</b> for $m = 10$, $\text{FWER} = 1 - 0.95^{10} = 0.401$
+            (≈40%), corrected to $\alpha' = .005$. Bonferroni is simple and conservative — it slightly over-controls,
+            which is why methods like Holm or FDR are sometimes preferred when $m$ is large.</p>
+          <p class="skey"><b>Answer:</b> $\text{FWER} = 1 - 0.95^{20} \approx 0.64$ (64%); Bonferroni threshold
+            $\alpha' = 0.0025$.</p>
+        </div>
+
+        <!-- COMMON PITFALLS -->
+        <div class="wm">
+          <div class="wm-head"><span class="wnum">⚑</span><h3>Common pitfalls these problems are built to prevent</h3>
+            <span class="wtag">the recurring mistakes on the long-answer exam</span></div>
+          <ul class="steps">
+            <li><b>Calling a result "big" because $p &lt; .05$.</b> Significance is not size. Always pair the $p$-value
+              with an effect size — Cohen's $d$ (W2), $r^2$ (W4, W9), or $\eta^2$ for ANOVA.</li>
+            <li><b>Reading $r^2$ as "percent of points on the line."</b> $r^2 = 0.81$ means 81% of the <em>variance</em>
+              is explained, not 81% of the data.</li>
+            <li><b>Treating a correlation as causation.</b> $r$ fixes neither direction nor a lurking third variable
+              (W4, W9); only random assignment does.</li>
+            <li><b>Rounding sample size down.</b> The MoE formula gives a <em>minimum</em>; $1067.1$ rounds up to
+              $1068$ (W8), or your margin will exceed what you promised.</li>
+            <li><b>Forgetting $p = 0.5$ is the worst case.</b> It maximises $p(1-p)$ and so the required $n$ — the safe
+              default when no prior estimate exists.</li>
+            <li><b>Confusing a main effect with an interaction.</b> Parallel lines = main effects only (W10);
+              non-parallel = interaction. Probe simple effects, don't eyeball row averages.</li>
+            <li><b>Ignoring multiple comparisons.</b> Twenty tests at $\alpha = .05$ carry a ≈64% family-wise
+              false-positive rate (W11); correct $\alpha$ before celebrating a "hit."</li>
+            <li><b>Assuming reliable implies valid.</b> A measure can be perfectly consistent yet systematically wrong
+              (W1) — reliability is necessary, not sufficient, for validity.</li>
+            <li><b>Averaging ordinal data.</b> Ranks have unequal gaps; summarise them with a median, not a mean (W1).</li>
+            <li><b>Reading "not significant" as "no effect."</b> An underpowered study (W5) can miss a real effect —
+              absence of evidence is not evidence of absence.</li>
+          </ul>
+        </div>
       </section>
 
       <!-- GLOSSARY -->
